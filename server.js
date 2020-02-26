@@ -6,6 +6,9 @@ const giveaways = require("discord-giveaways")
 const http = require('http');
 const express = require('express');
 const devs = ["654741240310399005", "670413244594126861"];
+const embedColor = "#36393e";
+const embedSuccess = "#22BF41";
+const embedFail = "#f30707";
 const app = express();
 app.get("/", (request, response) => {
   response.sendStatus(200);
@@ -311,6 +314,26 @@ Avatar: **\`${avatar}\`**`)
     }
 });
 
+client.on('message', Alpahforever => {//By Alpha Codes 2019,
+ //By Alpha Codes 2019,
+   
+  if (Alpahforever.content.startsWith(prefix +"avatar")) {//By Alpha Codes 2019,
+if(!Alpahforever.channel.guild) return;//By Alpha Codes 2019,
+      var alpahmen = Alpahforever.mentions.users.first();
+  var alpahserver ;//By Alpha Codes 2019,
+    if(alpahmen){//By Alpha Codes 2019,
+        var alpahserver = alpahmen; } else { //By Alpha Codes 2019, else {
+        var alpahserver = Alpahforever.author; }
+    //By Alpha Codes 2019,
+      const alphakef = new Discord.RichEmbed()
+    .addField(`${alpahserver.tag} Avatar`, `[Click here](${alpahserver.avatarURL})`)
+//By Alpha Codes 2019,
+      .setColor(embedColor)
+      .setImage(`${alpahserver.avatarURL}`)
+    Alpahforever.channel.sendEmbed(alphakef);
+  }
+  });
+
 client.commands = new Discord.Collection();
 
 
@@ -398,5 +421,47 @@ client.on("guildDelete", async guild => {
 
 
 
+client.on('message', message => {
+
+  let command = message.content.toLowerCase().split(' ')[0];
+	command = command.slice(prefix.length)
+	if (message.channel.type !== 'text') return;
+if (command === 'server' || command === "guild") {
+	let emoji = {
+        online: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Online')}`,
+        dnd: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'DND')}`,
+        idle: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Idle')}`,
+        offline: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Offline')}`,
+        discord: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Discord')}`,
+        bot: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Bot')}`
+  }
+    if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply(`**You Don't Have Enough Permissions**.`).then(msg => msg.delete(3000));
+    message.guild.fetchBans().then(bans => {
+      var bansSize = bans.size;
+      
+      var server = new Discord.RichEmbed()
+     
+      .setDescription (`• **Some Info About __${message.guild.name}__**
+**\`\`\`js
+Server ID : (${message.guild.id})
+AFK Room : (${message.guild.afkChannel || "I Can't Find It"})\`\`\`** `)
+      .addField(`✽ **__Server Owner__**`, `**↝** [ **${message.guild.owner}** ]`) 
+      .addField(`✽ **__Server Type__**`, `**↝** [ ** ${message.guild.region}** ]`, true)
+      .addField(`✽ **__Server Created At__**`, `**↝ **[ **${moment(message.guild.createdAt).format("LL")}** ]`, true)
+      .addField(`✽ **__Roles Amount__**`, `**↝** [ **${message.guild.roles.size}** ]`, true)
+      .addField(`✽ **__Channels__**`, `**↝ \`#\` ${message.guild.channels.filter(a => a.type === 'text').size} - \`🎤\` ${message.guild.channels.filter(a => a.type === 'voice').size}**`, true)
+      .addField(`✽ **__Bans Amount__**`, `**↝** [ **${bansSize}** ]`, true)
+      .addField(`✽ **__Last Member__**`, `**↝** [ **${Array.from(message.channel.guild.members.values()).sort((a, b) => b.joinedAt - a.joinedAt).map(m => `<@!${m.id}>`).splice(0, 1)}** ]`, true)
+      .addField(`✽ **__Members__**`, `**↝ ${emoji.online} \`${message.guild.members.filter(r => r.presence.status === 'online').size}\` | ${emoji.idle} \`${message.guild.members.filter(r => r.presence.status === 'idle').size}\` | ${emoji.bot} \`${message.guild.members.filter(r => r.user.bot).size}\`\n↝ ${emoji.dnd} \`${message.guild.members.filter(r => r.presence.status === 'dnd').size}\` | ${emoji.offline} \`${message.guild.members.filter(r => r.presence.status === 'offline').size}\` | ${emoji.discord} \`${message.guild.memberCount}\`**`, true)
+        .setFooter('Requested By : ' + message.author.username,message.author.displayAvatarURL)
+      .setTimestamp()
+      .setColor('#36393e')
+      .setThumbnail(message.guild.iconURL)
+      message.channel.send(server)
+
+    })
+}
+  
+});
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
