@@ -41,19 +41,6 @@ client.on('message', message => {
 });
 */
 
-client.on('message',async message => {
-  if(message.channel.type === 'dm') return;
-  if(message.content.startsWith(prefix + "id")) {
-    let newID = new Discord.RichEmbed()
-    .setAuthor(`Userinfo.`, message.author.avatarURL)
-    .setTitle(`• ${client.user.tag}`)
-    .setThumbnail(client.user.avatarURL)
-    .addField('• Roles', `\`${client.roles.map(a => a.name).join('\n')}\``,true)
-    .addField('• VoiceChannel', `${client.voiceChannel.name || 'None'}`,true);
-
-    message.channel.send(newID);
-  }
-});
 
 
 
@@ -92,7 +79,7 @@ client.on('ready', function() {
     }
  
 });
-
+const devs = ["670413244594126861","654741240310399005","601331798257041418","653619090950324257","521297759794495489","474224066409005058"]
 const adminprefix = "!.";
 client.on('message', message => {
     var argresult = message.content.split(` `).slice(1).join(' ');
