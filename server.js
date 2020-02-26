@@ -484,4 +484,7 @@ AFK Room : (${message.guild.afkChannel || "I Can't Find It"})\`\`\`** `)
   
 });
 
+
+
+
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
