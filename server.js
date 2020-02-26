@@ -1,8 +1,8 @@
 const Discord = require("discord.js")
-const client = new Discord.Client();
 const prefix = ".";
+const client = new Discord.Client();
+const emojis = '677267870471684096';
 const fs = require("fs");
-const giveaways = require("discord-giveaways")
 const http = require('http');
 const express = require('express');
 const devs = ["654741240310399005", "670413244594126861"];
@@ -19,10 +19,30 @@ setInterval(() => {
   http.get(`https://nikonbott.glitch.me/`);
 }, 280000);
 
-const settings = {
-    prefix: ".",
-    token: "NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo"
-};
+
+
+client.on('message', message => {
+    if (!message.channel.guild) return;
+    let emojis = {
+        online: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Online')}`,
+        dnd: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'DND')}`,
+        idle: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Idle')}`,
+        offline: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Offline')}`,
+        discord: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Discord')}`,
+        bot: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Bot')}`
+    }
+    if (message.content.startsWith(prefix + 'fm')) {
+        var Nikon = new Discord.RichEmbed()
+            .setThumbnail(message.guild.iconURL)
+            .setFooter(message.author.username, message.author.avatarURL)
+            .addField('✽ Filter Members', `» ${emojis.online} \`${message.guild.members.filter(r => r.presence.status === 'online').size}\` | ${emojis.idle} \`${message.guild.members.filter(r => r.presence.status === 'idle').size}\` | ${emojis.bot} \`${message.guild.members.filter(r => r.user.bot).size}\`\n» ${emojis.dnd} \`${message.guild.members.filter(r => r.presence.status === 'dnd').size}\` | ${emojis.offline} \`${message.guild.members.filter(r => r.presence.status === 'offline').size}\` | ${emojis.discord} \`${message.guild.memberCount}\``, true);
+        message.channel.send(Nikon);
+    }
+});
+
+
+
+
 
 client.on('ready',  () => {
 console.log('~ Bot On !  ');
@@ -95,7 +115,7 @@ client.on('message', message => {
    
  
   });
-const Enmap = require('enmap');
+/*const Enmap = require('enmap');
 const cd = require('countdown');
 const moment = require('moment');
 const ms = require('ms');
@@ -246,7 +266,7 @@ client.on('message', async (message) => {
     } else return undefined;
   }
 });
-
+*/
 client.on('message', message => {
     if (message.content.startsWith(prefix + "user")) {
       var status = {
