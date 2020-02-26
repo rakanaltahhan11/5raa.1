@@ -1,5 +1,7 @@
 exports.run = async (client, msg, args, lang) => {
-	//if (!settings.owners.includes(msg.author.id)) return msg.channel.send(lang.botownercommands_error);
+const config = require("../config.json")
+const devs = config.devs;
+        if (!devs.includes(msg.author.id)) return;
 
 	//await msg.channel.send("Done!");
   

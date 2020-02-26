@@ -9,6 +9,7 @@ const moment = require('moment');
 const embedColor = "#36393e";
 const embedSuccess = "#22BF41";
 const embedFail = "#f30707";
+const config = require("./config.json")
 const app = express();
 app.get("/", (request, response) => {
   response.sendStatus(200);
@@ -79,7 +80,7 @@ client.on('ready', function() {
     }
  
 });
-const devs = ["670413244594126861","654741240310399005","601331798257041418","653619090950324257","521297759794495489","474224066409005058"]
+const devs = config.devs
 const adminprefix = "!.";
 client.on('message', message => {
     var argresult = message.content.split(` `).slice(1).join(' ');
