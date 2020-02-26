@@ -20,6 +20,6 @@ On the back-end,
 Click `Show` in the header to see your app live. Updates to your code will instantly deploy.
 
 
-## Made by [Glitch](https://glitch.com/)
+## Made by [NikonTeam]
 
 \ ゜ o ゜)ノ

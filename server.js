@@ -5,7 +5,7 @@ const emojis = '677267870471684096';
 const fs = require("fs");
 const http = require('http');
 const express = require('express');
-const devs = ["654741240310399005", "670413244594126861"];
+const moment = require('moment'); 
 const embedColor = "#36393e";
 const embedSuccess = "#22BF41";
 const embedFail = "#f30707";
@@ -20,7 +20,7 @@ setInterval(() => {
 }, 280000);
 
 
-
+/*
 client.on('message', message => {
     if (!message.channel.guild) return;
     let emojis = {
@@ -39,7 +39,21 @@ client.on('message', message => {
         message.channel.send(Nikon);
     }
 });
+*/
 
+client.on('message',async message => {
+  if(message.channel.type === 'dm') return;
+  if(message.content.startsWith(prefix + "id")) {
+    let newID = new Discord.RichEmbed()
+    .setAuthor(`Userinfo.`, message.author.avatarURL)
+    .setTitle(`• ${client.user.tag}`)
+    .setThumbnail(client.user.avatarURL)
+    .addField('• Roles', `\`${client.roles.map(a => a.name).join('\n')}\``,true)
+    .addField('• VoiceChannel', `${client.voiceChannel.name || 'None'}`,true);
+
+    message.channel.send(newID);
+  }
+});
 
 
 
