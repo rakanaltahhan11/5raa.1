@@ -1,111 +1,137 @@
-// server.js
-// where your node app starts
-
-// init project
-const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
+const Discord = require("discord.js")
+const client = new Discord.Client();
+const prefix = ".";
 const fs = require("fs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// we've started you off with Express,
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
-
-// init sqlite db
-const dbFile = "./.data/sqlite.db";
-const exists = fs.existsSync(dbFile);
-const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database(dbFile);
-
-// if ./.data/sqlite.db does not exist, create it, otherwise print records to console
-db.serialize(() => {
-  if (!exists) {
-    db.run(
-      "CREATE TABLE Dreams (id INTEGER PRIMARY KEY AUTOINCREMENT, dream TEXT)"
-    );
-    console.log("New table Dreams created!");
-
-    // insert default dreams
-    db.serialize(() => {
-      db.run(
-        'INSERT INTO Dreams (dream) VALUES ("Find and count some sheep"), ("Climb a really tall mountain"), ("Wash the dishes")'
-      );
-    });
-  } else {
-    console.log('Database "Dreams" ready to go!');
-    db.each("SELECT * from Dreams", (err, row) => {
-      if (row) {
-        console.log(`record: ${row.dream}`);
-      }
-    });
-  }
-});
-
-// http://expressjs.com/en/starter/basic-routing.html
+const giveaways = require("discord-giveaways")
+const http = require('http');
+const express = require('express');
+const app = express();
 app.get("/", (request, response) => {
-  response.sendFile(`${__dirname}/views/index.html`);
+  response.sendStatus(200);
 });
 
-// endpoint to get all the dreams in the database
-app.get("/getDreams", (request, response) => {
-  db.all("SELECT * from Dreams", (err, rows) => {
-    response.send(JSON.stringify(rows));
-  });
-});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`https://nikonbott.glitch.me/`);
+}, 280000);
 
-// endpoint to add a dream to the database
-app.post("/addDream", (request, response) => {
-  console.log(`add to dreams ${request.body.dream}`);
 
-  // DISALLOW_WRITE is an ENV variable that gets reset for new projects
-  // so they can write to the database
-  if (!process.env.DISALLOW_WRITE) {
-    const cleansedDream = cleanseString(request.body.dream);
-    db.run(`INSERT INTO Dreams (dream) VALUES (?)`, cleansedDream, error => {
-      if (error) {
-        response.send({ message: "error!" });
-      } else {
-        response.send({ message: "success" });
-      }
+var prfx = "."
+
+client.on('ready', () => {
+    console.log("I'm ready !");
+    giveaways.launch(client, {
+        updateCountdownEvery: 5000,
+        botsCanWin: false,
+        ignoreIfHasPermission: [
+            "MANAGE_MESSAGES",
+            "MANAGE_GUILD",
+            "ADMINISTRATOR"
+        ],
+        embedColor: "#FF0000",
+        embedColorEnd: "#000000",
+        reaction: "🎉",
+        storage: __dirname+"/giveaways.json"
     });
-  }
 });
 
-// endpoint to clear dreams from the database
-app.get("/clearDreams", (request, response) => {
-  // DISALLOW_WRITE is an ENV variable that gets reset for new projects so you can write to the database
-  if (!process.env.DISALLOW_WRITE) {
-    db.each(
-      "SELECT * from Dreams",
-      (err, row) => {
-        console.log("row", row);
-        db.run(`DELETE FROM Dreams WHERE ID=?`, row.id, error => {
-          if (row) {
-            console.log(`deleted row ${row.id}`);
-          }
-        });
-      },
-      err => {
-        if (err) {
-          response.send({ message: "error!" });
-        } else {
-          response.send({ message: "success" });
+
+client.on("message", (message) => {
+ 
+    const ms = require("ms"); 
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+ 
+    if(command === "create"){
+     
+ 
+                         let time = args[0];
+                      let winners = args[1];
+                      let prize = args.slice(2).join(" ")
+                      if (!time || !winners || !prize) return message.reply(`Wrong Use | Usage : \n .gcreate <time> <winners> <prize>`)
+                      if (isNaN(winners)) return message.reply(`Winner Need To Be Number`)
+                      if (!time) return message.reply(`1s , 1m , 1h , 1w , 1mo`)
+      
+giveaways.start(message.channel, {
+    time: ms(args[0]),
+    prize: args.slice(2).join(" "),
+    winnersCount: parseInt(args[1]),
+    messages: {
+        giveaway: "🎉🎉  **GIVEAWAY** 🎉🎉",
+        giveawayEnded: "@everyone\n\n🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
+        timeRemaining: "Time remaining: **{duration}**!",
+        inviteToParticipate: "React with 🎉 to participate!",
+        winMessage: "Congratulations, {winners}! You won **{prize}**!",
+        embedFooter: "Giveaways",
+        noWinner: "No Winner.",
+        winners: "winner(s)",
+        endedAt: "Ended at",
+        units: {
+            seconds: "seconds",
+            minutes: "minutes",
+            hours: "hours",
+            days: "days"
         }
-      }
-    );
-  }
+    }
+});
+    }
 });
 
-// helper function that prevents html/css/script malice
-const cleanseString = function(string) {
-  return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-};
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`);
+client.on("message", (message) => {
+ 
+    const ms = require("ms"); 
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+ 
+    if(command === "reroll"){
+        let messageID = args[0];
+      if(!messageID) messageID = "**None**";
+        giveaways.reroll(messageID).then(() => {
+            message.channel.send("Success! Giveaway rerolled!");
+        }).catch((err) => {
+            message.channel.send("No giveaway found for "+messageID+", please check and try again");
+        });
+    }
+ 
 });
+
+client.on("message", (message) => {
+ 
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+ 
+    if(command === "edit"){
+        let messageID = args[0];
+        giveaways.edit(messageID, {
+            newWinnersCount: 3,
+            newPrize: "New Prize!",
+            addTime: 5000
+        }).then(() => {
+            message.channel.send("Success! Giveaway updated!");
+        }).catch((err) => {
+                if(!messageID) messageID = "**None**";
+            message.channel.send("No giveaway found for "+messageID+", please check and try again");
+        });
+    }
+ 
+});
+
+client.on("message", (message) => {
+ 
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+ 
+    if(command === "end"){
+        let messageID = args[0];
+        giveaways.delete(messageID).then(() => {
+            message.channel.send("Success! Giveaway Ended!");
+        }).catch((err) => {
+          if(!messageID) messageID = "**None**";
+            message.channel.send("No giveaway found for "+messageID+", please check and try again");
+        });
+    }
+ 
+});
+
+client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
