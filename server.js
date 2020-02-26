@@ -9,7 +9,8 @@ const moment = require('moment');
 const embedColor = "#36393e";
 const embedSuccess = "#22BF41";
 const embedFail = "#f30707";
-const config = require("./config.json")
+const config = require("./config.json");
+let coins = require("./coins.json");
 const app = express();
 app.get("/", (request, response) => {
   response.sendStatus(200);
@@ -117,6 +118,85 @@ client.on('message', message => {
    
  
   });
+
+client.on('message', message => {
+ if(!coins[message.author.id]){
+    coins[message.author.id] = {
+      coins: 0
+    };
+  }
+
+  let coinAmt = Math.floor(Math.random() * 12) + 1;
+  let baseAmt = Math.floor(Math.random() * 12) + 1;
+  console.log(`${coinAmt} ; ${baseAmt}`);
+
+  if(message.author.bot) return;
+  if(coinAmt === baseAmt){
+    coins[message.author.id] = {
+      coins: coins[message.author.id].coins + parseInt(baseAmt)
+    };
+  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+    if (err) console.log(err)
+  });
+  
+  }     
+});
+
+
+client.on('message', message => {
+         if(message.content.startsWith(prefix + "cadd")) { 
+           
+             var user = message.mentions.members.first();
+           
+  let args1 = message.content.split(" ").slice(1)
+  if (args1 < 1) return message.reply("Write a number");
+  if(!devs.includes(message.author.id)) return; else {
+   coins[message.author.id] = {
+      coins: coins[message.author.id].coins + parseInt(args1)
+    };  
+  }
+        
+  message.channel.send(`You added __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`) 
+     
+     }  
+fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+    if (err) console.log(err)
+  });
+})
+
+client.on('message', message => {
+         if(message.content.startsWith(prefix + "cremove")) { 
+           
+  let args1 = message.content.split(" ").slice(1)
+  if (args1 < 1) return message.reply("Write a number");
+  if(!devs.includes(message.author.id)) return; else
+   coins[message.author.id] = {
+      coins: coins[message.author.id].coins - parseInt(args1)
+    };  
+
+message.channel.send(`You removed __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`)
+     }  
+fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+    if (err) console.log(err)
+  });
+})
+
+client.on('message', message => {
+         if(message.content.startsWith(prefix + "cset")) { 
+           
+  let args1 = message.content.split(" ").slice(1)
+  if (args1 < 1) return message.reply("Write a number");
+  if(!devs.includes(message.author.id)) return; else
+   coins[message.author.id] = {
+      coins: coins[message.author.id].coins = parseInt(args1)
+    };  
+
+message.channel.send(`You set you Coins to __${coins[message.author.id].coins}__**.**`)
+     }
+  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+    if (err) console.log(err)
+  });
+})
 /*const Enmap = require('enmap');
 const cd = require('countdown');
 const moment = require('moment');
@@ -373,23 +453,8 @@ fs.readdir("./commands/", (err, files) => {
     console.log(`${f} loaded!`);
     client.commands.set(props.help.name, props);
   });
-});client.commands = new Discord.Collection();
+});
 
-fs.readdir("./commands/", (err, files) => {
-
-  if(err) console.log(err);
-
-  let jsfile = files.filter(f => f.split(".").pop() === "js");
-  if(jsfile.length <= 0) {
-    console.log("Couldn't find commands.");
-    return;
-}
- jsfile.forEach((f) => {
-    let props = require(`./commands/${f}`);
-  console.log(`${f} loaded!`);
-  client.commands.set(props.help.name, props);
-  });
-}); 
 
 client.on("message", message => {
   //a little bit of data parsing/general checks

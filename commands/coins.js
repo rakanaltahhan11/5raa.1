@@ -57,7 +57,7 @@ module.exports.help = {
 const Discord = require("discord.js");
 let coins = require("../coins.json");
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (client, message, args) => {
   //!coins
   if(!coins[message.author.id]){
     coins[message.author.id] = {
@@ -84,7 +84,7 @@ module.exports.run = async (bot, message, args) => {
 
 message.channel.send(coinEmbed)
   } else if (men) {
-    let mCoins = (coins[message.mentions.users.first().id].coins);
+    let mCoins = coins[message.mentions.users.first().id].coins
     let coinEmbed = new Discord.RichEmbed()
   .setAuthor(men.username)
   .setThumbnail(men.avatarURL)
