@@ -12,10 +12,12 @@
     "body-parser": "^1.19.0",
     "canvas": "^2.5.0",
     "chai": "^4.2.0",
+    "countdown": "^2.6.0",
     "cpu": "^1.0.1",
     "dateformat": "^3.0.3",
     "dblapi.js": "^2.3.0",
-    "discord.js": "^11.5.0",
+    "discord-giveaways": "^3.2.1",
+    "discord.js": "^11.5.1",
     "enmap": "^4.8.7",
     "express": "^4.16.4",
     "ffmpeg": "0.0.4",
@@ -41,7 +43,8 @@
     "sqlite": "^3.0.3",
     "sqlite3": "^4.0.8",
     "stackjs": "^0.1.0",
-    "stackos": "^1.1.0"
+    "stackos": "^1.1.0",
+    "to-time": "^1.0.2"
   },
   "engines": {
     "node": "8.4.0"
