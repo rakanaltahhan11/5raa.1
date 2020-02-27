@@ -80,7 +80,7 @@ module.exports.run = async (client, message, args) => {
   .setAuthor(message.author.username)
   .setThumbnail(message.author.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`${em1} | **__${message.author.username}__ has \`\`${uCoins}\`\`**`)
+  .setDescription(`${em1} | **__${message.author.username}__: \`\`${uCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   } else if (men) {
@@ -89,7 +89,7 @@ message.channel.send(coinEmbed)
   .setAuthor(men.username)
   .setThumbnail(men.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`${em1} | **__${men.username}__ has \`\`${mCoins}\`\`**`)
+  .setDescription(`${em1} | **__${men.username}__: \`\`${mCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   }
