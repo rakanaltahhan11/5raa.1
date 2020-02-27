@@ -599,7 +599,7 @@ let embed = new Discord.RichEmbed()
       const e = new Discord.RichEmbed()
     
       
-             .setDescription(':white_check_mark:** Change Role For **'+args[0]+'**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+             .setDescription(':white_check_mark:** Change Role For **'+args[0]+'**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
              .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
              .setColor('BLACK')
               message.channel.send(e)
@@ -609,7 +609,7 @@ let embed = new Discord.RichEmbed()
 
       const e1 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.forEach(m=>m.removeRole( role1 ))
@@ -619,7 +619,7 @@ let embed = new Discord.RichEmbed()
 
       const e2 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.filter(m=>m.user.bot).forEach(m=>m.removeRole(role1))
@@ -628,7 +628,7 @@ let embed = new Discord.RichEmbed()
 
       const e3 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.removeRole(role1))
@@ -645,7 +645,7 @@ let embed = new Discord.RichEmbed()
 			//return message.reply(`**:white_check_mark: \`\`[ ${role1.name} ]\`\` رتبة \`\`[ ${args[0]} ]\`\` لقد تم اعطاء **`);
      const e = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **'+args[0]+'**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **'+args[0]+'**,** '+'**'+'+ '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
             message.channel.send(e)
@@ -659,7 +659,7 @@ let embed = new Discord.RichEmbed()
 
        const e1 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'+ '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.forEach(m=>m.addRole( role1 ))
@@ -669,7 +669,7 @@ let embed = new Discord.RichEmbed()
 
       const e2 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'+ '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.filter(m=>m.user.bot).forEach(m=>m.addRole(role1))
@@ -679,7 +679,7 @@ let embed = new Discord.RichEmbed()
 
        const e3 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'+ '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.addRole(role1))
