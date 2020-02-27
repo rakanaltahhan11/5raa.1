@@ -64,7 +64,7 @@ module.exports.run = async (client, message, args) => {
       coins: 0
     };
   }
-  let em1 = bot.guilds.get("677267870471684096").emojis.find(r => r.name === "money");
+  let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "dollar");
   
   
   let men = message.mentions.users.first()
