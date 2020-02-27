@@ -89,7 +89,7 @@ message.channel.send(coinEmbed)
   .setAuthor(men.username)
   .setThumbnail(men.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`${em1} | **\`\`${mCoins}\`\`**`)
+  .setDescription(`${em1} | ${men.username} has **\`\`${mCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   }
