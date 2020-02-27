@@ -64,7 +64,7 @@ module.exports.run = async (client, message, args) => {
       coins: 0
     };
   }
-  
+  let em1 = bot.guilds.get("677267870471684096").emojis.find(r => r.name === "money");
   
   
   let men = message.mentions.users.first()
@@ -80,7 +80,7 @@ module.exports.run = async (client, message, args) => {
   .setAuthor(message.author.username)
   .setThumbnail(message.author.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`💰 | **\`\`${uCoins}\`\`**`)
+  .setDescription(`${em1} | **\`\`${uCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   } else if (men) {
@@ -89,7 +89,7 @@ message.channel.send(coinEmbed)
   .setAuthor(men.username)
   .setThumbnail(men.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`💰 | **\`\`${mCoins}\`\`**`)
+  .setDescription(`${em1} | **\`\`${mCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   }

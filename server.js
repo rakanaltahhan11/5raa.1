@@ -22,16 +22,16 @@ setInterval(() => {
 }, 280000);
 
 
-/*
+
 client.on('message', message => {
     if (!message.channel.guild) return;
     let emojis = {
-        online: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Online')}`,
-        dnd: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'DND')}`,
-        idle: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Idle')}`,
-        offline: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Offline')}`,
-        discord: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Discord')}`,
-        bot: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Bot')}`
+        online: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Online')}`,
+        dnd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'DND')}`,
+        idle: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Idle')}`,
+        offline: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Offline')}`,
+        discord: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Discord')}`,
+        bot: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Bot')}`
     }
     if (message.content.startsWith(prefix + 'fm')) {
         var Nikon = new Discord.RichEmbed()
@@ -41,7 +41,7 @@ client.on('message', message => {
         message.channel.send(Nikon);
     }
 });
-*/
+
 
 
 
@@ -416,20 +416,19 @@ Avatar: **\`${avatar}\`**`)
     }
 });
 
-client.on('message', Alpahforever => {//By Alpha Codes 2019,
- //By Alpha Codes 2019,
-   
-  if (Alpahforever.content.startsWith(prefix +"avatar")) {//By Alpha Codes 2019,
-if(!Alpahforever.channel.guild) return;//By Alpha Codes 2019,
+client.on('message', Alpahforever => {
+
+  if (Alpahforever.content.startsWith(prefix +"avatar")) {
+if(!Alpahforever.channel.guild) return;
       var alpahmen = Alpahforever.mentions.users.first();
-  var alpahserver ;//By Alpha Codes 2019,
-    if(alpahmen){//By Alpha Codes 2019,
-        var alpahserver = alpahmen; } else { //By Alpha Codes 2019, else {
+  var alpahserver ;
+    if(alpahmen){
+        var alpahserver = alpahmen; } else { 
         var alpahserver = Alpahforever.author; }
-    //By Alpha Codes 2019,
+  
       const alphakef = new Discord.RichEmbed()
     .addField(`${alpahserver.tag} Avatar`, `[Click here](${alpahserver.avatarURL})`)
-//By Alpha Codes 2019,
+
       .setColor(embedColor)
       .setImage(`${alpahserver.avatarURL}`)
     Alpahforever.channel.sendEmbed(alphakef);
@@ -508,19 +507,19 @@ client.on("guildDelete", async guild => {
 
 
 
-/*client.on('message', message => {
+client.on('message', message => {
 
   let command = message.content.toLowerCase().split(' ')[0];
 	command = command.slice(prefix.length)
 	if (message.channel.type !== 'text') return;
 if (command === 'server' || command === "guild") {
 	let emoji = {
-        online: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Online')}`,
-        dnd: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'DND')}`,
-        idle: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Idle')}`,
-        offline: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Offline')}`,
-        discord: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Discord')}`,
-        bot: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'Bot')}`
+        online: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Online')}`,
+        dnd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'DND')}`,
+        idle: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Idle')}`,
+        offline: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Offline')}`,
+        discord: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Discord')}`,
+        bot: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Bot')}`
   }
     if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply(`**You Don't Have Enough Permissions**.`).then(msg => msg.delete(3000));
     message.guild.fetchBans().then(bans => {
@@ -549,7 +548,7 @@ AFK Room : (${message.guild.afkChannel || "I Can't Find It"})\`\`\`** `)
     })
 }
   
-});*/
+});
 
 client.on("message", message => {
 	var args = message.content.split(' ').slice(1); 
