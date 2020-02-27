@@ -55,7 +55,7 @@ module.exports.help = {
 }*/
 
 const Discord = require("discord.js");
-let coins = require("../coins.json");
+const coins = require("../coins.json");
 
 module.exports.run = async (client, message, args) => {
   //!coins
@@ -80,7 +80,7 @@ module.exports.run = async (client, message, args) => {
   .setAuthor(message.author.username)
   .setThumbnail(message.author.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`${em1} | **\`\`${uCoins}\`\`**`)
+  .setDescription(`${em1} | **__${message.author.username}__ has \`\`${uCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   } else if (men) {
@@ -89,7 +89,7 @@ message.channel.send(coinEmbed)
   .setAuthor(men.username)
   .setThumbnail(men.avatarURL)
   .setColor("#00FF00")
-  .setDescription(`${em1} | ${men.username} has **\`\`${mCoins}\`\`**`)
+  .setDescription(`${em1} | **__${men.username}__ has \`\`${mCoins}\`\`**`)
 
 message.channel.send(coinEmbed)
   }
