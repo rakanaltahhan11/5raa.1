@@ -508,7 +508,7 @@ client.on("guildDelete", async guild => {
 
 
 
-client.on('message', message => {
+/*client.on('message', message => {
 
   let command = message.content.toLowerCase().split(' ')[0];
 	command = command.slice(prefix.length)
@@ -549,9 +549,144 @@ AFK Room : (${message.guild.afkChannel || "I Can't Find It"})\`\`\`** `)
     })
 }
   
+});*/
+
+client.on("message", message => {
+	var args = message.content.split(' ').slice(1); 
+
+	var msg = message.content.toLowerCase();
+	if( !message.guild ) return;
+  let roleremove = new Discord.RichEmbed()
+  .setDescription(`
+  أمثله على الأوامر : 
+  .roleremove @mention rolename : لسحب رتبة لعضو معين
+  .roleremove all rolename : لسحب رتبة للجميع 
+  .roleremove humans rolename : لسحب رتبة للاشخاص فقط
+  .roleremove bots rolename : لسحب رتبة لجميع البوت`);
+  let roleadd = new Discord.RichEmbed()
+   .setDescription(`
+  أمثله على الأوامر : 
+  .role @mention rolename : لأعطاء رتبة لعضو معين
+  .role all rolename : لأعطاء رتبة للجميع 
+  .role humans rolename : لأعطاء رتبة للاشخاص فقط
+  .role bots rolename : لأعطاء رتبة لجميع البوتات`)
+	if( !msg.startsWith('.role')) return;
+          if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
+              if(!message.guild.member(client.user).hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But I Dont Have Permission** `MANAGE_GUILD`' );
+let embed = new Discord.RichEmbed()
+      .setColor("#f30707")
+      .setDescription(":x: | You need to buy `Premium`")
+      
+    // if(!premium.includes(message.guild.id)) return message.channel.send(embed); else
+  
+	if( msg.toLowerCase().startsWith('.roleremove' )){
+    
+    let embed = new Discord.RichEmbed()
+      .setColor("#f30707")
+      .setDescription(":x: | You need to buy `Premium`")
+      
+    // if(!premium.includes(message.guild.id)) return message.channel.send(embed); else
+		if( !args[0] ) return message.channel.send(roleremove);
+		if( !args[1] ) return message.channel.send(roleremove);
+ //if(!message.guild.channel) return message.reply("hi")
+		var role = msg.split(' ').slice(2).join(" ").toLowerCase(); 
+		var role1 = message.guild.roles.filter( r=>r.name.toLowerCase().indexOf(role)>-1 ).first(); 
+		if( !role1 ) return message.channel.send(roleremove);if( message.mentions.members.first() ){
+
+			message.mentions.members.first().removeRole( role1 );
+			//return message.reply('**:white_check_mark: [ '+role1.name+' ] رتبة [ '+args[0]+' ] تم سحب من **');
+
+      const e = new Discord.RichEmbed()
+    
+      
+             .setDescription(':white_check_mark:** Change Role For **'+args[0]+'**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+             .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+             .setColor('BLACK')
+              message.channel.send(e)
+		}
+		if( args[0].toLowerCase() == "all" ){
+      
+
+      const e1 = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+			message.guild.members.forEach(m=>m.removeRole( role1 ))
+			return	message.channel.send(e1)
+		} else if( args[0].toLowerCase() == "bots" ){
+      
+
+      const e2 = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+			message.guild.members.filter(m=>m.user.bot).forEach(m=>m.removeRole(role1))
+			return	message.channel.send(e2)
+		} else if( args[0].toLowerCase() == "humans" ){
+
+      const e3 = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'-'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+			message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.removeRole(role1))
+			return	message.channel.send(e3)
+		} 	
+	} else {
+		if( !args[0] ) return message.channel.send(roleadd);
+		if( !args[1] ) return message.channel.send(roleadd);
+		var role = msg.split(' ').slice(2).join(" ").toLowerCase(); 
+		var role1 = message.guild.roles.filter( r=>r.name.toLowerCase().indexOf(role)>-1 ).first(); 
+		if( !role1 ) return message.channel.send(roleadd);if( message.mentions.members.first() ){
+
+			message.mentions.members.first().addRole( role1 );
+			//return message.reply(`**:white_check_mark: \`\`[ ${role1.name} ]\`\` رتبة \`\`[ ${args[0]} ]\`\` لقد تم اعطاء **`);
+     const e = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **'+args[0]+'**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+            message.channel.send(e)
+     
+     
+     
+      
+		}
+		if( args[0].toLowerCase() == "all" ){
+      
+
+       const e1 = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+			message.guild.members.forEach(m=>m.addRole( role1 ))
+			return	message.channel.send(e1)
+		} else if( args[0].toLowerCase() == "bots" ){
+      
+
+      const e2 = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+			message.guild.members.filter(m=>m.user.bot).forEach(m=>m.addRole(role1))
+			return	message.channel.send(e2)
+		} else if( args[0].toLowerCase() == "humans" ){
+      
+
+       const e3 = new Discord.RichEmbed()
+    
+           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'+'+'`'+role1.name+'`'+'**')
+           .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
+           .setColor('BLACK')
+			message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.addRole(role1))
+			return	message.channel.send(e3)
+		} 
+	} 
 });
-
-
 
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
