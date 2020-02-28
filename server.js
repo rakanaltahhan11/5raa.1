@@ -514,7 +514,7 @@ client.on('message', message => {
 if(message.author.bot) return
   var command = message.content.split(" ")[0];
   var args = message.content.split(" ").slice(1);
-  if (command == "kickk") {
+  if (command == "kick") {
    if(!message.channel.guild) return message.channel.send(``);
    const guild = message.guild;
     
@@ -917,13 +917,45 @@ client.on("message",msg => {
   let emoji = {
     cd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'cd')}`,
     sys: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'aaaa')}`,
+    coins: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'money')}`,
     top: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'top')}`,
     pp: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'pp')}`
 }
-  if(msg.startsWith('.help')) {
-    msg.channel.send(`**• Help commands :
-    » \`\`.general\`\` : To see general commands , ${emoji.cd}
-`)
+  if(msg.content.startsWith('.help')) {
+    msg.channel.send(`• Help commands :
+» \`\`.general\`\` : To see general commands , ${emoji.cd}
+» \`\`.system\`\` : To see system commands , ${emoji.sys}
+» \`\`.hcoins\`\` : To see coins commands , ${emoji.coins}
+» \`\`.htop\`\` : To see top commands , ${emoji.top}
+» \`\`.other\`\` : To see bot commands , ${emoji.pp}`)
+  }
+})
+
+client.on("message",msg => {
+  let emoji = {
+    cd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'cd')}`
+}
+  if(msg.content.startsWith('.general')) {
+    msg.channel.send(`• Help commands :
+» \`\`.spotify\`\` : To see what you are listening in spotify , ${emoji.cd}
+» \`\`.avatar\`\` : To see your avatar , ${emoji.cd}
+» \`\`.fm\`\` : To filter members , ${emoji.cd}
+» \`\`.id\`\` : To see your id , ${emoji.cd}`)
+  }
+})
+
+client.on("message",msg => {
+  let emoji = {
+    sys: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'aaaa')}`
+}
+  if(msg.content.startsWith('.system')) {
+    msg.channel.send(`• S commands :
+» \`\`.kick\`\` : To kick a person , ${emoji.sys}
+» \`\`.ban\`\` : To ban a person , ${emoji.sys}
+» \`\`.mute\`\` : To give a person mute , ${emoji.sys}
+» \`\`.unmute\`\` : To remove the mute from a person , ${emoji.sys}
+» \`\`.role\`\` : To give a person role , ${emoji.sys}
+» \`\`.roleremove\`\` : To remove a role from person , ${emoji.sys}`)
   }
 })
 
