@@ -142,8 +142,9 @@ client.on('message', message => {
   }     
 });
 
-
+   
 client.on('message', message => {
+  let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
          if(message.content.startsWith(prefix + "cadd")) { 
            
              var user = message.mentions.members.first();
@@ -156,7 +157,7 @@ client.on('message', message => {
     };  
   }
         
-  message.channel.send(`You added __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`) 
+  message.channel.send(`${emj1} | You added __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`) 
      
      }  
 fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
@@ -165,6 +166,7 @@ fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
 })
 
 client.on('message', message => {
+    let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
          if(message.content.startsWith(prefix + "cremove")) { 
            
   let args1 = message.content.split(" ").slice(1)
@@ -174,7 +176,7 @@ client.on('message', message => {
       coins: coins[message.author.id].coins - parseInt(args1)
     };  
 
-message.channel.send(`You removed __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`)
+message.channel.send(`${emj1} | You removed __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`)
      }  
 fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
