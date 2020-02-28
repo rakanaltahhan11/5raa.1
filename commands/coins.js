@@ -24,8 +24,8 @@ module.exports.run = async (client, message, args) => {
   let coinEmbed = new Discord.RichEmbed()
   //.setAuthor(message.author.username)
   .setThumbnail(message.author.avatarURL)
-  .setColor("#00FF00")
-  .setDescription(`${em1} | **__${message.author.username}__: \`\`${uCoins}\`\`**`)
+  .setColor("#36393e")
+  .setDescription(`${em1} | **__${message.author.username}__ has : \`\`${uCoins}€\`\`**`)
 
 message.channel.send(coinEmbed)
   } else if (men) {
@@ -33,8 +33,8 @@ message.channel.send(coinEmbed)
     let coinEmbed = new Discord.RichEmbed()
   //.setAuthor(men.username)
   .setThumbnail(men.avatarURL)
-  .setColor("#00FF00")
-  .setDescription(`${em1} | **__${men.username}__: \`\`${mCoins}\`\`**`)
+  .setColor("#36393e")
+  .setDescription(`${em1} | **__${men.username}__ has : \`\`${mCoins}£\`\`**`)
 
 message.channel.send(coinEmbed)
   }
