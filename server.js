@@ -157,7 +157,35 @@ client.on('message', message => {
 
 
 
+    
+ 
 
+client.on('message', message => {
+  //let em1 = client.guilds.get("569987960989155340").emojis.find(r => r.name === "partner");
+  
+	if(message.content === ".support" || message.content === ".sup")
+    var embed = new Discord.RichEmbed()
+    .setTitle("Click Me")
+    .setURL("https://discord.gg/2TyvRN4")
+    .setFooter(`Requested By: ${message.author.tag}`, message.author.avatarURL)
+    .setTimestamp();
+    message.channel.send(embed)
+});
+    
+client.on('message', message => {
+ // let em1 = client.guilds.get("569987960989155340").emojis.find(r => r.name === "partner");
+   
+
+	if(message.content === ".invite" || message.content === ".inv"){
+		if(message.author.bot) return undefined;
+var embed = new Discord.RichEmbed()
+    .setTitle("Click Me")
+    .setURL(`https://discordapp.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot`)
+    .setFooter(`Requested By: ${message.author.tag}`, message.author.avatarURL)
+    .setTimestamp();
+    message.channel.send(embed)
+	}
+});
 
 client.on('message', message => {
    
@@ -273,16 +301,63 @@ const embed = new Discord.RichEmbed()
   });
 })
 
-client.on("message", message)
+client.on("message", message => {
+  if(message.content === prefix + "claim") {
+    let dailycooldown = new Set();
+let dailycdseconds = 86400;
+
+
+  let em2 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
+let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "falsee");
+  
+  let auth = message.author
+let messageArray = message.content.split(" ");
+let cmd = messageArray[0];
+let auth2 = message.author.username
+let E002 = "`You must wait 24 hours between uses`"
+const embedSuccess = "#36393e";
+const embedFail = "#36393e";
+  let amount = Math.floor(Math.random() * 1000) + 300
+
+    if(dailycooldown.has(message.author.id)){
+      let EE002 = new Discord.RichEmbed()
+      .setColor(embedFail)
+      .setTitle("Error")
+      .setDescription(`${em1} | An error occurred when attempting to perform that request. Please check the Syntax and try again.\nError: ${E002}`)
+  return message.channel.send(EE002)
+    }
+    else { 
+      let dUser = message.author.id
+      let dCoins = coins[message.author.id].coins;
+      let dailyEmbed = new Discord.RichEmbed()
+    .setColor(embedSuccess)
+    .setTitle("Success!")
+    .setDescription(`${em2} | You have claimed your daily reward of \`${amount}\` coins!`)
+  message.channel.send(dailyEmbed)
+  coins[dUser] = {
+    coins: dCoins + parseInt(amount)
+  };
+  dailycooldown.add(message.author.id);
+  setTimeout(() => {
+    dailycooldown.delete(message.author.id)
+  }, dailycdseconds * 1000)
+    }
+
+  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+if (err) message.channel.send(err)
+})
+  }
+  })
 
 client.on("message", message => {
   if(message.content === prefix + "coins") {
+    
     if(!coins[message.author.id]){
     coins[message.author.id] = {
       coins: 0
     };
   }
-  let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "dollar");
+  let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "dollar");//
   
   
   let men = message.mentions.users.first()
@@ -317,6 +392,165 @@ message.channel.send(coinEmbed)
   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
 if (err) message.channel.send(err)
 })
+  }
+})
+
+client.on("message", message => {
+  if(message.content === prefix + "pay") {
+    let content = message.content.split(" ");
+  let command = content[0];
+  let args = content.slice(1);
+    if(!coins[message.author.id]){
+    return message.reply(`:x: | **You don't have any coins**.`)
+  }
+
+  let pUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args);
+  
+  let embedo4 = new Discord.RichEmbed()
+  .setColor("#36393e")
+  .setDescription(`:x: | **You Must Mention a user**.`);
+  
+  if(!pUser) return message.channel.send(embedo4)
+
+  if(!coins[pUser.id]){
+   coins[pUser.id] = {
+     coins: 0
+   };
+  }
+
+  let pCoins = coins[pUser.id].coins;
+  let sCoins = coins[message.author.id].coins;
+
+  let embedo1 = new Discord.RichEmbed()
+  .setColor("#36393e")
+  .setDescription(`:x: | **You Don't have enough coins**.`);
+  
+  let embedo2 = new Discord.RichEmbed()
+  .setColor("#36393e")
+  .setDescription(`:x: | **You Can't transfer Coins to yourself**.`);
+  
+  let embedo3 = new Discord.RichEmbed()
+  .setColor("#36393e")
+  .setDescription(`:x: | **You Must transfer Coins above __\`1\`__**.`);
+  
+  let embedo5 = new Discord.RichEmbed()
+  .setColor("#36393e")
+  .setDescription(`:x: | **You Must put a number**.`);
+  
+  if(isNaN(args[1])) return message.channel.send(embedo5)
+  if(args[1] == undefined) return message.channel.send(embedo5)
+  if(sCoins < args[1]) return message.channel.send(embedo1)
+  if(args[1] < 1) return message.channel.send(embedo3)
+  if(message.author.id === pUser.id) return message.channel.send(embedo2)
+  if(!pUser) return message.channel.send(embedo4)
+
+  coins[message.author.id] = {
+    coins: sCoins - parseInt(args[1])
+  };
+
+  coins[pUser.id] = {
+    coins: pCoins + parseInt(args[1])
+  };
+  
+  var tax = args[1] * 5/100
+
+  if(args[1] >= 100000) {
+    coins[pUser.id] = {
+    coins: pCoins + parseInt(args[1]) - parseInt(tax)
+  };
+  }
+  
+  if(args[1] >= 100000) {
+  var embed = new Discord.RichEmbed()
+  .setTitle("Coins Transference")
+  .setColor("#36393e")
+  .addField("Sender", `<@${message.author.id}>`)
+  .addField("To", `${pUser}`)
+  .addField("Amount", `\`\`${args[1] - parseInt(tax)}\`\``)
+  .addField("Tax", `\`5%\``)
+  .addField("Tax Amount", `\`${tax}\``)
+  .setTimestamp()
+  
+  
+  
+  message.channel.send(embed)
+    
+    var embed1 = new Discord.RichEmbed()
+  .setTitle("Coins Transference")
+  .setColor("#36393e")
+  .addField(`Coins Recieved`, `\`${args[1] - parseInt(tax)}\``)
+  .addField("Tax", `\`5%\``)  
+  .addField("Tax Amount", `\`${tax}\``)
+  .addField("From", `${message.author.id}`)
+  .addField("His ID", `${message.author.id}`)
+  .addField("Server name", `${message.guild.name}`)
+  
+  pUser.send(embed1)
+    
+    let embed3 = new Discord.RichEmbed()
+  
+  .setTitle("New Coins Transference")
+  .setColor("#36393e")
+  .addField("From", `<@${message.author.id}>`)
+  .addField("Sender ID", `${message.author.id}`)
+  .addField("To", `${pUser}`)
+  .addField("Reciever ID", `${pUser.id}`)
+  .addField("Amount", `\`${args[1] - parseInt(tax)}\``)
+  .addField("Tax on it", `\`5%\``)
+  .addField("Tax Amount", `\`${tax}\``)
+  .addField("Server Name", `${message.guild.name}`)
+  .setTimestamp()
+  
+  client.channels.get("682368245797617672").send(embed3)
+    
+  } else {
+    var embed = new Discord.RichEmbed()
+  .setTitle("Coins Transference")
+  .setColor("#36393e")
+  .addField("Sender", `<@${message.author.id}>`)
+  .addField("To", `${pUser}`)
+  .addField("Amount", `\`\`${args[1]}\`\``)
+  .addField("Tax", `\`0%\``)
+  .setTimestamp()
+  
+  
+  
+  message.channel.send(embed)
+    
+    var embed1 = new Discord.RichEmbed()
+  .setTitle("Coins Transference")
+  .setColor("#36393e")
+  .addField(`Coins Recieved`, `\`${args[1]}\``)
+  .addField("Tax", `\`0%\``)
+  .addField("From", `<@${message.author.id}>`)
+  .addField("His ID", `${message.author.id}`)
+  .addField("Server name", `${message.guild.name}`)
+  
+  pUser.send(embed1)
+    
+    let embed3 = new Discord.RichEmbed()
+  
+  .setTitle("New Coins Transference")
+  .setColor("#36393e")
+  .addField("From", `<@${message.author.id}>`)
+  .addField("Sender ID", `${message.author.id}`)
+  .addField("To", `${pUser}`)
+  .addField("Reciever ID", `${pUser.id}`)
+  .addField("Amount", `\`${args[1]}\``)
+  .addField("Tax on it", `\`0%\``)
+  .addField("Server Name", `${message.guild.name}`)
+  .setTimestamp()
+  
+  client.channels.get("682368245797617672").send(embed3)
+    
+  }
+  //message.channel.send(`${message.author} has given ${pUser} ${args[1]} NCoins.`);
+  
+  
+fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+if (err) message.channel.send(err)
+})
+  
   }
 })
 

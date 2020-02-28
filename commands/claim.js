@@ -59,6 +59,6 @@ if (err) message.channel.send(err)
   
 
 module.exports.help = {
-  name: "claim",
+  name: "",
   aliases: ["d"]
 }
