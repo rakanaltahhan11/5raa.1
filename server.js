@@ -60,6 +60,20 @@ console.log('~ Bot On !  ');
 	//console.log(link);
   });
 
+client.on('ready',  () => {
+
+  
+  
+
+  console.log('~ Bot On !  ');
+    console.log(`Logged in as * [ " ${client.user.username} " ] servers! [ " ${client.guilds.size} " ]`);
+    console.log(`Logged in as * [ " ${client.user.username} " ] Users! [ " ${client.users.size} " ]`);
+    console.log(`Logged in as * [ " ${client.user.username} " ] channels! [ " ${client.channels.size} " ]`);
+   console.log(``)
+  //let link = bot.generateInvite();
+	//console.log(link);
+  });
+
 client.on('ready', function() {
      
    // const statuslist = [
@@ -84,6 +98,57 @@ client.on('ready', function() {
     }
  
 });
+
+client.on('guildCreate', function() {
+     
+   // const statuslist = [
+     // `.help | ${client.guilds.size} Servers`,
+     // `.help | ${client.channels.size} Channels`,
+     // `.help | ${client.users.size} Users`
+   // ];
+  //  const random = Math.floor(Math.random() * statuslist.length);/
+
+    try {
+       client.user.setPresence({
+        game: {
+          name: `.help | ${client.guilds.size} Servers`,
+          type: "STREAMING",
+          url: "https://www.twitch.tv/murtajaziad"
+          //url: 'https://www.twitch.tv/spokloo'
+        },
+        status: "online"
+      });
+    } catch (error) {
+      console.error(error);
+    }
+ 
+});
+
+client.on('guildDelete', function() {
+     
+   // const statuslist = [
+     // `.help | ${client.guilds.size} Servers`,
+     // `.help | ${client.channels.size} Channels`,
+     // `.help | ${client.users.size} Users`
+   // ];
+  //  const random = Math.floor(Math.random() * statuslist.length);/
+
+    try {
+       client.user.setPresence({
+        game: {
+          name: `.help | ${client.guilds.size} Servers`,
+          type: "STREAMING",
+          url: "https://www.twitch.tv/murtajaziad"
+          //url: 'https://www.twitch.tv/spokloo'
+        },
+        status: "online"
+      });
+    } catch (error) {
+      console.error(error);
+    }
+ 
+});
+
 const devs = config.devs
 const adminprefix = "!.";
 client.on('message', message => {
@@ -397,9 +462,7 @@ if (err) message.channel.send(err)
 
 client.on("message", message => {
   if(message.content === prefix + "pay") {
-    let content = message.content.split(" ");
-  let command = content[0];
-  let args = content.slice(1);
+    var args = message.content.split(" ");
     if(!coins[message.author.id]){
     return message.reply(`:x: | **You don't have any coins**.`)
   }

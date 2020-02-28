@@ -173,5 +173,5 @@ if (err) message.channel.send(err)
 }
 
 module.exports.help = {
-  name: "pay"
+  name: "pay1"
 }

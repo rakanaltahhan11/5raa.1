@@ -48,5 +48,5 @@ if (err) message.channel.send(err)
 }
 
 module.exports.help = {
-  name: ""
+  name: "q"
 }
