@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args, lang) => {
   let pUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args);
   
   let embedo4 = new Discord.RichEmbed()
-  .setColor("#f30707")
+  .setColor("#36393e")
   .setDescription(`:x: | **You Must Mention a user**.`);
   
   if(!pUser) return message.channel.send(embedo4)
@@ -39,19 +39,19 @@ module.exports.run = async (client, message, args, lang) => {
   let sCoins = coins[message.author.id].coins;
 
   let embedo1 = new Discord.RichEmbed()
-  .setColor("#f30707")
+  .setColor("#36393e")
   .setDescription(`:x: | **You Don't have enough coins**.`);
   
   let embedo2 = new Discord.RichEmbed()
-  .setColor("#f30707")
+  .setColor("#36393e")
   .setDescription(`:x: | **You Can't transfer Coins to yourself**.`);
   
   let embedo3 = new Discord.RichEmbed()
-  .setColor("#f30707")
+  .setColor("#36393e")
   .setDescription(`:x: | **You Must transfer Coins above __\`1\`__**.`);
   
   let embedo5 = new Discord.RichEmbed()
-  .setColor("#f30707")
+  .setColor("#36393e")
   .setDescription(`:x: | **You Must put a number**.`);
   
   if(isNaN(args[1])) return message.channel.send(embedo5)

@@ -34,7 +34,7 @@ message.channel.send(coinEmbed)
   //.setAuthor(men.username)
   .setThumbnail(men.avatarURL)
   .setColor("#36393e")
-  .setDescription(`${em1} | **__${men.username}__ has : \`\`${mCoins}£\`\`**`)
+  .setDescription(`${em1} | **__${men.username}__ has : \`\`${mCoins}€\`\`**`)
 
 message.channel.send(coinEmbed)
   }
