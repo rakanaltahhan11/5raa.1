@@ -119,6 +119,56 @@ client.on('message', message => {
  
   });
 
+
+client.on('message', message => {
+    if (message.content.toLowerCase().startsWith(prefix+"t")) {
+        const top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
+     let tl = "";
+      for (let i=1;i<=10;i++) {
+          if (!top[i]) continue;
+         tl += i+" - "+top[i].name+" : "+top[i].memberCount+"\n"
+      }
+      message.channel.send(tl)
+    }
+});
+
+
+client.on('message', message => {
+    if (message.content.toLowerCase().startsWith(prefix + `topservers`)) {
+      if (!devs.includes(message.author.id)) return;
+
+        const top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
+       message.channel.send(`**⇏ Top 10 Servers: **\n1. **${top[0].name}**: ${top[0].memberCount} \n2. **${top[1].name}**: ${top[1].memberCount}.\n3. **${top[2].name}**: ${top[2].memberCount}.\n4. **${top[3].name}**: ${top[3].memberCount}.\n5. **${top[4].name}**: ${top[4].memberCount}.\n6. **${top[5].name}**: ${top[5].memberCount}.\n7. **${top[6].name}**: ${top[6].memberCount}.\n8. **${top[7].name}**: ${top[7].memberCount}.\n9. **${top[8].name}**: ${top[8].memberCount}.\n10. **${top[9].name}**: ${top[9].memberCount} .`)
+        }
+});
+
+
+client.on('message', message => {
+   
+    if (message.content.startsWith('.verfiy')) {
+ let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt"); 
+    let em2 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "falsee"); 
+        var activated_servers = ['681933999224258570'];
+
+        if (activated_servers.includes('' + message.guild.id + '') || activated_servers.includes(message.guild.id)) {
+
+            let guildr = client.guilds.filter(r => r.ownerID === message.author.id).size;
+            if (guildr === 0) {
+                message.channel.send(`**${em2} | You Aren't Owner Of Any Server Where Bot Is In It**`)
+
+            } else if (guildr >= 1) {
+                if (message.guild.member(message.author).roles.find(x => x.name === `Users`)) return message.channel.send(`**${em2} | You Has This Role Aready**`);;
+                message.channel.send(`**${em1} | I Found You In A Server Which You Are The Owner**`)
+                message.member.addRole(message.guild.roles.find(x => x.name === `Users`));
+            }
+        } else {
+            return;
+        }
+
+    }
+});
+
+
 client.on('message', message => {
  if(!coins[message.author.id]){
     coins[message.author.id] = {
@@ -156,9 +206,11 @@ client.on('message', message => {
       coins: coins[message.author.id].coins + parseInt(args1)
     };  
   }
-        
-  message.channel.send(`${emj1} | You added __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`) 
-     
+   const embed = new Discord.RichEmbed()
+   .setDescription(`${emj1} | __${args1}__ has been added to your balance and now have __${coins[message.author.id].coins}__`)
+   message.channel.send(embed)
+       //message.channel.send(`${emj1} | You added __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`) 
+
      }  
 fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
@@ -175,8 +227,10 @@ client.on('message', message => {
    coins[message.author.id] = {
       coins: coins[message.author.id].coins - parseInt(args1)
     };  
-
-message.channel.send(`${emj1} | You removed __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`)
+const embed = new Discord.RichEmbed()
+   .setDescription(`${emj1} | __${args1}__ has been removed from your balance and now have __${coins[message.author.id].coins}__`)
+   message.channel.send(embed)
+//message.channel.send(`${emj1} | You removed __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`)
      }  
 fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
@@ -184,6 +238,7 @@ fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
 })
 
 client.on('message', message => {
+    let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
          if(message.content.startsWith(prefix + "cset")) { 
            
   let args1 = message.content.split(" ").slice(1)
@@ -192,8 +247,10 @@ client.on('message', message => {
    coins[message.author.id] = {
       coins: coins[message.author.id].coins = parseInt(args1)
     };  
-
-message.channel.send(`You set you Coins to __${coins[message.author.id].coins}__**.**`)
+const embed = new Discord.RichEmbed()
+   .setDescription(`${emj1} | Your balance has been set to __${coins[message.author.id].coins}__`)
+   message.channel.send(embed)
+//message.channel.send(`You set you Coins to __${coins[message.author.id].coins}__**.**`)
      }
   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
