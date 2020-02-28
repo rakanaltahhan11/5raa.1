@@ -118,7 +118,7 @@ module.exports.run = async (client, message, args, lang) => {
   .addField("Server Name", `${message.guild.name}`)
   .setTimestamp()
   
-  client.channels.get("657259147485511689").send(embed3)
+  client.channels.get("682368245797617672").send(embed3)
     
   } else {
     var embed = new Discord.RichEmbed()
@@ -158,7 +158,7 @@ module.exports.run = async (client, message, args, lang) => {
   .addField("Server Name", `${message.guild.name}`)
   .setTimestamp()
   
-  client.channels.get("657259147485511689").send(embed3)
+  client.channels.get("682368245797617672").send(embed3)
     
   }
   //message.channel.send(`${message.author} has given ${pUser} ${args[1]} NCoins.`);
