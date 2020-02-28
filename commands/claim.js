@@ -1,6 +1,6 @@
 const Discord = require("discord.js")
 const fs = require("fs");
-const coins = JSON.parse(fs.readFileSync("coins.json"))
+const coins = require("../coins.json")
 //const coins = require("../coins.json");
 
 const client = new Discord.Client()
@@ -51,7 +51,7 @@ const embedFail = "#36393e";
   }, dailycdseconds * 1000)
     }
 
-  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+  fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
 if (err) message.channel.send(err)
 })
   
@@ -59,6 +59,6 @@ if (err) message.channel.send(err)
   
 
 module.exports.help = {
-  name: "qq",
+  name: "claim",
   aliases: ["d"]
 }

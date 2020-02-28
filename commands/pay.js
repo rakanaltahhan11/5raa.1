@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 //const coins = JSON.parse(fs.readFileSync("coins.json"))
-const coins = require("../coins.json");
+const coins = require("../coins.json")
 
 var prefix = ".";
 
@@ -164,7 +164,7 @@ module.exports.run = async (client, message, args, lang) => {
   //message.channel.send(`${message.author} has given ${pUser} ${args[1]} NCoins.`);
   
   
-fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
 if (err) message.channel.send(err)
 })
   
@@ -173,5 +173,5 @@ if (err) message.channel.send(err)
 }
 
 module.exports.help = {
-  name: "pay1"
+  name: "pay"
 }

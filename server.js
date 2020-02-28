@@ -302,7 +302,7 @@ client.on('message', message => {
 });
 
    
-client.on('message', message => {
+/*client.on('message', message => {
   let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
          if(message.content.startsWith(prefix + "cadd")) { 
            
@@ -364,9 +364,9 @@ const embed = new Discord.RichEmbed()
   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
   });
-})
+}) */
 
-client.on("message", message => {
+/*client.on("message", message => {
   if(message.content === prefix + "claim") {
     let dailycooldown = new Set();
 let dailycdseconds = 86400;
@@ -613,7 +613,7 @@ if (err) message.channel.send(err)
 })
   
   }
-})
+})*/
 
 
 client.on('message', message => {
