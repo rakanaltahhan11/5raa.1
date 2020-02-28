@@ -985,7 +985,6 @@ client.on("message",msg => {
 }
   if(msg.content.startsWith('.general')) {
     msg.channel.send(`• General commands :
-» \`\`.spotify\`\` : To see what you are listening in spotify , ${emoji.cd}
 » \`\`.avatar\`\` : To see your avatar , ${emoji.cd}
 » \`\`.fm\`\` : To filter members , ${emoji.cd}
 » \`\`.id\`\` : To see your id , ${emoji.cd}`)
