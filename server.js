@@ -913,6 +913,17 @@ client.on("message", async function (message) {
     }
 });
 
-
+client.on("message",msg => {
+  let emoji = {
+    cd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'cd')}`,
+    sys: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'aaaa')}`,
+    top: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'top')}`,
+    pp: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'pp')}`
+}
+  if(msg.startsWith('.help')) {
+    msg.channel.send(`**• Help commands :
+    » \`\`.general\`\` : To see general commands , ${emoji.cd}`)
+  }
+})
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
