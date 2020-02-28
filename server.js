@@ -312,19 +312,20 @@ if (message.content.startsWith(prefix + "id")) {
     
              let roles = h.roles.map(r => r).slice(1 , 3).toString() + '\n' + h.roles.map(r => r).slice(3 , 6).toString();
         let uCoins = coins[message.author.id].coins;
+        let mCoins = coins[heg.id].coins;
 
                var id = new Discord.RichEmbed()
-     .setDescription(`**• Some information about __${message.author.username}__ :
+     .setDescription(`**• Some information about __${heg.username}__ :
 \`\`\`js
-ID : ${message.author.id}
-Status : ${message.author.presence.status.toUpperCase()}
-He is a bot : ${message.author.bot.toString().toUpperCase()}\`\`\`**`)
+ID : ${heg.id}
+Status : ${heg.presence.status.toUpperCase()}
+He is a bot : ${heg.bot.toString().toUpperCase()}\`\`\`**`)
      .addField(`${em5} | Joined discord from :`, `__${moment(heg.createdTimestamp).format('`D/M/YYYY HH:mm`')}__ **\n** \**${moment(heg.createdTimestamp).fromNow()}\**` ,true) 
      .addField(`${em4} | Joined server from :`, `__${moment(h.joinedAt).format('`D/M/YYYY HH:mm`')}__ \n \**${moment(h.joinedAt).fromNow()}\**`, true)               
      .addField(`${em3} | Invites :`, `**__${inviteCount}__**`, true)  
      .addField(`${em1} | Your coins :`, `**__${uCoins}__**`, true)          
      .addField(`${em6} | Roles : `,`**__${roles}__**`)
-     .addField(`${em2} | I see you in :`,`** __${client.guilds.filter(g => g.members.find(m => m.id == message.author.id)).size}__ Guild** `)
+     .addField(`${em2} | I see you in :`,`** __${client.guilds.filter(g => g.members.find(m => m.id == heg.id)).size}__ Guild** `)
              
      .setThumbnail(heg.avatarURL)
      message.channel.send(id)
