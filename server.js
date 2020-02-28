@@ -10,7 +10,10 @@ const embedColor = "#36393e";
 const embedSuccess = "#22BF41";
 const embedFail = "#f30707";
 const config = require("./config.json");
-let coins = require("./coins.json");
+let coins = JSON.parse(fs.readFileSync('./coins.json' , 'utf8'));
+
+
+
 const app = express();
 app.get("/", (request, response) => {
   response.sendStatus(200);
@@ -936,7 +939,7 @@ client.on("message",msg => {
     cd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'cd')}`
 }
   if(msg.content.startsWith('.general')) {
-    msg.channel.send(`• Help commands :
+    msg.channel.send(`• General commands :
 » \`\`.spotify\`\` : To see what you are listening in spotify , ${emoji.cd}
 » \`\`.avatar\`\` : To see your avatar , ${emoji.cd}
 » \`\`.fm\`\` : To filter members , ${emoji.cd}
@@ -949,7 +952,7 @@ client.on("message",msg => {
     sys: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'aaaa')}`
 }
   if(msg.content.startsWith('.system')) {
-    msg.channel.send(`• S commands :
+    msg.channel.send(`• System commands :
 » \`\`.kick\`\` : To kick a person , ${emoji.sys}
 » \`\`.ban\`\` : To ban a person , ${emoji.sys}
 » \`\`.mute\`\` : To give a person mute , ${emoji.sys}
