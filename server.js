@@ -922,7 +922,8 @@ client.on("message",msg => {
 }
   if(msg.startsWith('.help')) {
     msg.channel.send(`**• Help commands :
-    » \`\`.general\`\` : To see general commands , ${emoji.cd}`)
+    » \`\`.general\`\` : To see general commands , ${emoji.cd}
+`)
   }
 })
 
