@@ -9,8 +9,7 @@ const moment = require('moment');
 const embedColor = "#36393e";
 const embedSuccess = "#22BF41";
 const embedFail = "#f30707";
-const config = require("./config.json");
-let coins = JSON.parse(fs.readFileSync('./coins.json' , 'utf8'));
+const config = require("./config.json");//
 
 
 
@@ -278,7 +277,7 @@ client.on('message', message => {
 });
 
 
-client.on('message', message => {
+/*client.on('message', message => {
  if(!coins[message.author.id]){
     coins[message.author.id] = {
       coins: 0
@@ -299,7 +298,7 @@ client.on('message', message => {
   });
   
   }     
-});
+});*/
 
    
 /*client.on('message', message => {
