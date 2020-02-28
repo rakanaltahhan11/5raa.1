@@ -39,7 +39,7 @@
     "pretty-ms": "^6.0.0",
     "querystring": "^0.2.0",
     "quick.db": "^7.0.0-b22",
-    "snekfetch": "^4.0.4",
+    "snekfetch": "^3.4.5",
     "sqlite": "^3.0.3",
     "sqlite3": "^4.1.1",
     "stackjs": "^0.1.0",

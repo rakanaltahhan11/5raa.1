@@ -463,11 +463,9 @@ if (err) message.channel.send(err)
 client.on("message", message => {
   if(message.content === prefix + "pay") {
     var args = message.content.split(" ");
-    if(!coins[message.author.id]){
-    return message.reply(`:x: | **You don't have any coins**.`)
-  }
+    
 
-  let pUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args);
+  let pUser = message.guild.member(message.mentions.users.first()) && message.guild.members.get(args);
   
   let embedo4 = new Discord.RichEmbed()
   .setColor("#36393e")

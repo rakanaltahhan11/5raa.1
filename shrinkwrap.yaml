@@ -31,7 +31,7 @@ dependencies:
   pretty-ms: 6.0.0
   querystring: 0.2.0
   quick.db: 7.0.0-b22
-  snekfetch: 4.0.4
+  snekfetch: 3.4.5
   sqlite: 3.0.3
   sqlite3: 4.1.1
   stackjs: 0.1.0
@@ -2178,16 +2178,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bCR6cP+aTdScaQCnQKbPKtJOKDp/hj9EDLJo3Nw4y1QksqaovlW/bnptB6/c1e+qmNIDHRK+oXFDdEqBT8WzUA==
+  /snekfetch/3.4.5:
+    deprecated: use node-fetch instead
+    dev: false
+    resolution:
+      integrity: sha512-SHvh5vkr6b0TUMYR0xZouk+49wG5LlMNvkKnG86smh/Vy54C/mv+IbmA7DIkP2DEtpruDymQxBCHVFwGuuCr/g==
   /snekfetch/3.6.4:
     deprecated: use node-fetch instead
     dev: false
     resolution:
       integrity: sha512-NjxjITIj04Ffqid5lqr7XdgwM7X61c/Dns073Ly170bPQHLm6jkmelye/eglS++1nfTWktpP6Y2bFXjdPlQqdw==
-  /snekfetch/4.0.4:
-    deprecated: use node-fetch instead
-    dev: false
-    resolution:
-      integrity: sha512-dyycG9fvwtSJqKPfMVOpXt+60qvMGe7vWLwOJDiSJaiAx+hs2EnFChG2bXCWn7ulz+zGzrHdN9/yeEb0YqEPww==
   /sql-template-strings/2.2.2:
     dev: false
     engines:
@@ -2578,7 +2578,7 @@ specifiers:
   pretty-ms: ^6.0.0
   querystring: ^0.2.0
   quick.db: ^7.0.0-b22
-  snekfetch: ^4.0.4
+  snekfetch: ^3.4.5
   sqlite: ^3.0.3
   sqlite3: ^4.1.1
   stackjs: ^0.1.0
