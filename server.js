@@ -642,6 +642,7 @@ client.on("message", async function (message) {
     }
 });
 
+/*
 const logjson = JSON.parse(fs.readFileSync('./logj.json' , 'utf8'));
 //Perfect log Code
 client.on('message', message => {
@@ -1286,6 +1287,6 @@ client.on('voiceStateUpdate', (voiceOld, voiceNew) => {
         logChannel.send(voiceLeave);
     }
 });
-
+*/
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
