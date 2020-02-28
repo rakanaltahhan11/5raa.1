@@ -1,5 +1,6 @@
 
 const Discord = require("discord.js");
+const fs = require("fs")
 const coins = require("../coins.json");
 
 module.exports.run = async (client, message, args) => {
@@ -23,21 +24,25 @@ module.exports.run = async (client, message, args) => {
 
   let coinEmbed = new Discord.RichEmbed()
   //.setAuthor(message.author.username)
-  .setThumbnail(message.author.avatarURL)
+  //.setThumbnail(message.author.avatarURL)
   .setColor("#36393e")
   .setDescription(`${em1} | **__${message.author.username}__ has : \`\`${uCoins}€\`\`**`)
+  .setFooter(`${message.author.tag}`, message.author.avatarURL)
 
 message.channel.send(coinEmbed)
   } else if (men) {
     let mCoins = coins[message.mentions.users.first().id].coins
     let coinEmbed = new Discord.RichEmbed()
   //.setAuthor(men.username)
-  .setThumbnail(men.avatarURL)
+  //.setThumbnail(men.avatarURL)
   .setColor("#36393e")
   .setDescription(`${em1} | **__${men.username}__ has : \`\`${mCoins}€\`\`**`)
+      .setFooter(`${men.tag}`, men.avatarURL)
+
 
 message.channel.send(coinEmbed)
   }
+  
 }
 
 module.exports.help = {

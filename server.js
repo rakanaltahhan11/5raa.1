@@ -386,12 +386,12 @@ if (message.content.startsWith(prefix + "id")) {
              });
     
              let roles = h.roles.map(r => r).slice(1 , 3).toString() + '\n' + h.roles.map(r => r).slice(3 , 6).toString();
-        let uCoins = coins[message.author.id].coins;
-        let mCoins = coins[heg.id].coins;
+       // let uCoins = coins[message.author.id].coins;
+        //let mCoins = coins[heg.id].coins;
         var i;
         if(men) {
           i = coins[heg.id].coins;
-        } else {
+        } else if(!men) {
           i = coins[message.author.id].coins;
         }
 
@@ -961,5 +961,42 @@ client.on("message",msg => {
 » \`\`.roleremove\`\` : To remove a role from person , ${emoji.sys}`)
   }
 })
+
+client.on('message', dark => {
+       let servers = client.guilds.size;
+       var users = client.users.size;
+       var channels = client.channels.size;
+  //var prefix = prefixes[dark.guild.id].prefix || "."
+       var name = client.user.username;
+       let pretty = require('pretty-ms');
+       let cpu = require('cpu');
+       let stackos = require('stackos').info;
+       var owners = config.devs
+    let command = dark.content.toLowerCase().split(' ')[0];
+	command = command.slice(prefix.length)
+	if (dark.content === prefix + "bot" || dark.content === prefix + "stats") {
+    
+    if(!devs.includes(dark.author.id)) return;
+  
+      var night = new Discord.RichEmbed()
+       
+       .setColor('#36393e')
+      
+       .setDescription(`** → ℹ Bot Information**
+**\`\`\`js
+Bot Name : ${name}
+Bot Ping : ${Date.now() - dark.createdTimestamp} MS 
+Uptime : ${pretty(client.uptime, { verbose: true })}\`\`\`**`)
+      
+       .addField('→ General Info :' , `⇏ __**Servers**__ : ${servers} \n⇏ __**Users**__ : ${users} \n⇏ __**Channels**__ : ${channels}` , true)
+
+       .addField('→ Deving Info :' , `⇏ __**Node**__ :${process.version} \n⇏ __**CPU**__ : ${Math.round((process.cpuUsage().user + process.cpuUsage().system) / 2048)} MB ( ${cpu.num()} % ) \n⇏ __**Platform**__ : ${stackos.os} ( ${stackos.arch} Bit ) \n⇏ __**Procsser**__ : ${(stackos.cpus.model).split("(R)")[1]} ( ${stackos.cpus.cores} Cores ) \n⇏ __**Discord Version**__ : ${require('./package.json').dependencies["discord.js"].replace('^', '') + ' v'} \n⇏ __**Ram Usage**__ : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB ` , true)
+      
+     //  .addField('→ Bot Devs :' , `<@${owners}>`)
+        .setFooter('Requested By : ' + dark.author.username ,dark.author.displayAvatarURL)
+      .setTimestamp()
+      dark.channel.send(night)
+    }
+});
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
