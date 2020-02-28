@@ -119,28 +119,41 @@ client.on('message', message => {
  
   });
 
+client.on('message', function(message) {
+  if(message.author.bot) return;
+    if (message.channel.type === "dm") {
+        if (message.author.id === client.user.id) return;
+        var Dark = new Discord.RichEmbed()
+        .setTimestamp()
+        .setTitle('``NEW MESSAGE!!``')
+        .setThumbnail(`${message.author.avatarURL}`)
+        .setDescription(`\n\n\`\`\`${message.content}\`\`\``)
+        .setFooter(`From ${message.author.tag} (${message.author.presence.status.toUpperCase()})`)
+    client.channels.get("682930828946309122").send({embed:Dark});
+    }
+});
 
 client.on('message', message => {
-    if (message.content.toLowerCase().startsWith(prefix+"t")) {
-        const top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
+    if (message.content.toLowerCase().startsWith(prefix + "topservers")) {
+      
+      
+      let embed = new Discord.RichEmbed()
+      .setColor("#f30707")
+      
+      //if(!premium.includes(message.guild.id)) return message.channel.send(embed); else
+        if(!devs.includes(message.author.id)) return; else
+        var top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
      let tl = "";
-      for (let i=1;i<=10;i++) {
+      for (let i=0;i<=10;i++) {
           if (!top[i]) continue;
-         tl += i+" - "+top[i].name+" : "+top[i].memberCount+"\n"
+         tl += "`" + i + "`" +" - "+top[i].name+": "+ "**" + top[i].memberCount + "**" +"\n"+"\n"
       }
       message.channel.send(tl)
     }
 });
 
 
-client.on('message', message => {
-    if (message.content.toLowerCase().startsWith(prefix + `topservers`)) {
-      if (!devs.includes(message.author.id)) return;
 
-        const top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
-       message.channel.send(`**⇏ Top 10 Servers: **\n1. **${top[0].name}**: ${top[0].memberCount} \n2. **${top[1].name}**: ${top[1].memberCount}.\n3. **${top[2].name}**: ${top[2].memberCount}.\n4. **${top[3].name}**: ${top[3].memberCount}.\n5. **${top[4].name}**: ${top[4].memberCount}.\n6. **${top[5].name}**: ${top[5].memberCount}.\n7. **${top[6].name}**: ${top[6].memberCount}.\n8. **${top[7].name}**: ${top[7].memberCount}.\n9. **${top[8].name}**: ${top[8].memberCount}.\n10. **${top[9].name}**: ${top[9].memberCount} .`)
-        }
-});
 
 
 client.on('message', message => {
@@ -487,6 +500,96 @@ client.on("guildDelete", async guild => {
 });
 
 
+client.on('message', async message =>{
+	    let emoji = {
+        right: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'right')}`,
+        wrong: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'cd')}`,
+        no: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'no')}`,
+        load: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'load')}`
+      
+    }
+    if (message.author.boss) return;
+   
+  
+  if (!message.content.startsWith(prefix)) return;
+      let command = message.content.split(" ")[0];
+       command = command.slice(prefix.length);
+      let args = message.content.split(" ").slice(1);
+      if (command == "mute") {
+          if (!message.channel.guild) return;
+              if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return message.reply(`${emoji.cd} | **You Don't Have Enough Permissions**.`).then(msg => msg.delete(5000));
+          if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(`${emoji.cd} | **I Don't Have Enough Permissions**`).then(msg => msg.delete(5000));;
+          let user = message.mentions.users.first();
+          let muteRole = message.guild.roles.find("name", "Muted");
+          if (!muteRole) return message.reply(`${emoji.load} | **Please Make A Role With Name __\`\`Muted\`\`__`).then(msg => {msg.delete(5000)});
+          if (message.mentions.users.size < 1) return message.reply(`$[emoji.load} | **Mention A Member**.`).then(msg => {msg.delete(5000)});
+          let reason = message.content.split(" ").slice(2).join(" ");
+          message.guild.member(user).addRole(muteRole);
+          message.channel.sendMessage(`${emoji.right} | **${user} took mute by ${message.author.tag}**.`);
+          var muteembeddm = new Discord.RichEmbed()
+          .setAuthor(`Muted!`, user.displayAvatarURL)
+          .setDescription(`      
+  ${user} You Took Mute
+  ${message.author.tag} By
+  [ ${reason} ] : Reason
+  `)
+          .setFooter(`In : ${message.guild.name}`)
+          .setColor("RANDOM")
+      user.send( muteembeddm);
+    }
+  if(command === `unmute`) {
+    if(!message.member.hasPermission("MANAGE_ROLES")) return message.channel.sendMessage(`${emoji.cd} | **You Don't Have Enough Permissions**.`).then(m => m.delete(5000));
+  if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(`${emoji.cd} | **I Don't Have Enough Permissions**.`).then(msg => msg.delete(6000))
+  
+    let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!toMute) return message.channel.sendMessage(`${emoji.load} | **Mention A Member**.`);
+  
+    let role = message.guild.roles.find (r => r.name === "Muted");
+    
+    if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage(`**He Didn't Take A Mute Before**.`)
+  
+    await toMute.removeRole(role)
+    message.channel.sendMessage(`${emoji.right} | **Done**.`);
+  
+    return;
+  
+    }
+  
+  });
+   
+
+client.on('message', message => {
+  let emoji = {
+        right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+        wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+        no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+        load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+      
+    }
+  if (message.author.codes) return;
+  
+ 
+  let command = message.content.split(" ")[0];
+ 
+  let args = message.content.split(" ").slice(1);
+ 
+  if (command == prefix + "ban") {
+         
+  if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.channel.send(":information_source: | **You Don't Have Enough Permissions**");
+  if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.channel.send(":information_source: | **I Don't Have Enough Permissions**");
+  let user = message.mentions.users.first();
+ 
+  if (message.mentions.users.size < 1) return message.channel.send(`${emoji.load} | **Mention A Member**. `);
+  if (!message.guild.member(user)
+  .bannable) return message.channel.send(`${emoji.load} | **I can't ban him because his rank is higher more than me**.`);
+ 
+ 
+  message.guild.member(user).ban(7, user);
+ 
+message.channel.send(`**${emoji.right} |  ${user.username} banned from the server ! :airplane: **  `)
+ 
+}
+});
 
 client.on('message', message => {
 
@@ -537,19 +640,19 @@ client.on("message", message => {
 	var msg = message.content.toLowerCase();
 	if( !message.guild ) return;
   let roleremove = new Discord.RichEmbed()
-  .setDescription(`
-  أمثله على الأوامر : 
-  .roleremove @mention rolename : لسحب رتبة لعضو معين
-  .roleremove all rolename : لسحب رتبة للجميع 
-  .roleremove humans rolename : لسحب رتبة للاشخاص فقط
-  .roleremove bots rolename : لسحب رتبة لجميع البوت`);
+  .setDescription(`**Role Remove :
+\`\`\`JS
+.roleremove @mention <RoleName> : To Remove A Rank From One Member Only,
+.roleremove all <RoleName> : To Remove A Rank From All,
+.roleremove bots <RoleName> : To Remove A Rank From All Bots Only,
+.roleremove humans <RoleName> : To Remove A Rank From All Humans Only.\`\`\`**`);
   let roleadd = new Discord.RichEmbed()
-   .setDescription(`
-  أمثله على الأوامر : 
-  .role @mention rolename : لأعطاء رتبة لعضو معين
-  .role all rolename : لأعطاء رتبة للجميع 
-  .role humans rolename : لأعطاء رتبة للاشخاص فقط
-  .role bots rolename : لأعطاء رتبة لجميع البوتات`)
+   .setDescription(`**Role Add :
+\`\`\`JS
+.role @mention <RoleName> : To Give A Rank To One Member Only,
+.role all <RoleName> : To Give A Rank To All,
+.role bots <RoleName> : To Give A Rank To All Bots Only,
+.role humans <RoleName> : To Give A Rank To All Humans Only.\`\`\`**`)
 	if( !msg.startsWith('.role')) return;
           if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
               if(!message.guild.member(client.user).hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But I Dont Have Permission** `MANAGE_GUILD`' );
