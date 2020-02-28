@@ -306,6 +306,8 @@ client.on('message', message => {
 client.on('message', message => {
          if(message.content.startsWith(prefix + "cadd")) { 
            
+             let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
+         
              var user = message.mentions.members.first();
            
   let args1 = message.content.split(" ").slice(1)
@@ -316,8 +318,9 @@ client.on('message', message => {
     };  
   }
         
-  message.channel.send(`You added __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`) 
-     
+const embed = new Discord.RichEmbed()
+   .setDescription(`${emj1} | __${args1}__ has been added to your balance and now have __${coins[message.author.id].coins}__`)
+   message.channel.send(embed)     
      }  
 fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
@@ -327,6 +330,8 @@ fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
 client.on('message', message => {
          if(message.content.startsWith(prefix + "cremove")) { 
            
+             let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
+           
   let args1 = message.content.split(" ").slice(1)
   if (args1 < 1) return message.reply("Write a number");
   if(!devs.includes(message.author.id)) return; else
@@ -334,8 +339,9 @@ client.on('message', message => {
       coins: coins[message.author.id].coins - parseInt(args1)
     };  
 
-message.channel.send(`You removed __${args1}__ Coins and now you have __${coins[message.author.id].coins}__**.**`)
-     }  
+const embed = new Discord.RichEmbed()
+   .setDescription(`${emj1} | __${args1}__ has been removed from your balance and now have __${coins[message.author.id].coins}__`)
+   message.channel.send(embed)     }  
 fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)
   });
@@ -344,6 +350,8 @@ fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
 client.on('message', message => {
          if(message.content.startsWith(prefix + "cset")) { 
            
+             let emj1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt");
+
   let args1 = message.content.split(" ").slice(1)
   if (args1 < 1) return message.reply("Write a number");
   if(!devs.includes(message.author.id)) return; else
@@ -351,7 +359,9 @@ client.on('message', message => {
       coins: coins[message.author.id].coins = parseInt(args1)
     };  
 
-message.channel.send(`You set you Coins to __${coins[message.author.id].coins}__**.**`)
+const embed = new Discord.RichEmbed()
+   .setDescription(`${emj1} | Your balance has been set to __${coins[message.author.id].coins}__`)
+   message.channel.send(embed)
      }
   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
     if (err) console.log(err)

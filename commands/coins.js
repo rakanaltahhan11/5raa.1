@@ -138,7 +138,7 @@ module.exports.run = async (bot, message, args) => {
 
 message.channel.send(coinEmbed)
   } else if (men) {
-    let mCoins = coins[message.mentions.users.first().id].coins
+    let mCoins = coins[message.mentions.users.first().id].coins;
     let coinEmbed = new Discord.RichEmbed()
   //.setAuthor(men.username)
   //.setThumbnail(men.avatarURL)
