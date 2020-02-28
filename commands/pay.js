@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 //const coins = JSON.parse(fs.readFileSync("coins.json"))
-const coins = require("../coins.json")
+const coins = require("../coins.json");
 
 var prefix = ".";
 
@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args, lang) => {
   let pUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args);
   
   let embedo4 = new Discord.RichEmbed()
-  .setColor("#36393e")
+  .setColor("#f30707")
   .setDescription(`:x: | **You Must Mention a user**.`);
   
   if(!pUser) return message.channel.send(embedo4)
@@ -39,19 +39,19 @@ module.exports.run = async (client, message, args, lang) => {
   let sCoins = coins[message.author.id].coins;
 
   let embedo1 = new Discord.RichEmbed()
-  .setColor("#36393e")
+  .setColor("#f30707")
   .setDescription(`:x: | **You Don't have enough coins**.`);
   
   let embedo2 = new Discord.RichEmbed()
-  .setColor("#36393e")
+  .setColor("#f30707")
   .setDescription(`:x: | **You Can't transfer Coins to yourself**.`);
   
   let embedo3 = new Discord.RichEmbed()
-  .setColor("#36393e")
+  .setColor("#f30707")
   .setDescription(`:x: | **You Must transfer Coins above __\`1\`__**.`);
   
   let embedo5 = new Discord.RichEmbed()
-  .setColor("#36393e")
+  .setColor("#f30707")
   .setDescription(`:x: | **You Must put a number**.`);
   
   if(isNaN(args[1])) return message.channel.send(embedo5)
@@ -118,7 +118,7 @@ module.exports.run = async (client, message, args, lang) => {
   .addField("Server Name", `${message.guild.name}`)
   .setTimestamp()
   
-  client.channels.get("682368245797617672").send(embed3)
+  client.channels.get("657259147485511689").send(embed3)
     
   } else {
     var embed = new Discord.RichEmbed()
@@ -158,13 +158,13 @@ module.exports.run = async (client, message, args, lang) => {
   .addField("Server Name", `${message.guild.name}`)
   .setTimestamp()
   
-  client.channels.get("682368245797617672").send(embed3)
+  client.channels.get("657259147485511689").send(embed3)
     
   }
   //message.channel.send(`${message.author} has given ${pUser} ${args[1]} NCoins.`);
   
   
-fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+fs.writeFile("/coins.json", JSON.stringify(coins), (err) => {
 if (err) message.channel.send(err)
 })
   

@@ -10,6 +10,8 @@ const embedColor = "#36393e";
 const embedSuccess = "#22BF41";
 const embedFail = "#f30707";
 const config = require("./config.json");//
+let coins = require("./coins.json");
+
 
 
 
