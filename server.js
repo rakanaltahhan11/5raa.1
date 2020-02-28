@@ -500,12 +500,48 @@ client.on("guildDelete", async guild => {
 });
 
 
+
+client.on('message', message => {
+  let emoji = {
+        right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+        wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+        no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+        load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+      
+    }
+  client.on('message', message => {
+    
+if(message.author.bot) return
+  var command = message.content.split(" ")[0];
+  var args = message.content.split(" ").slice(1);
+  if (command == "kickk") {
+   if(!message.channel.guild) return message.channel.send(``);
+   const guild = message.guild;
+    
+  if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.channel.send(` | **You Don't Have Enough Permissions**.`);
+  if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.channel.send(`| **I Don't Have Enough Permissions**.`);
+  var user = message.mentions.users.first();
+  var reason = message.content.split(" ").slice(2).join(" ");
+  if (message.mentions.users.size < 1) return message.channel.send(`| **Mention A Member**.`);
+  if (!message.guild.member(user).kickable) return message.channel.send(` | **I Can't Give Him Kick Because His Rank Is Higher More Than Me**.`);
+if (user.id == message.guild.ownerID) return message.channel.send(`|** How I Can Give The OwnerShip Kick. **`)
+    message.channel.send(`** | ${user.tag} He Take Kick By : <@${message.author.id}> ! :airplane:** `)
+  message.guild.member(user).kick(reason)
+  guild.owner.send(`Server : ${guild.name}
+**Done Kicked** :${user.tag}  
+**By** : <@${message.author.id}>`).then(()=>{
+message.guild.member(user).kick();
+  })
+}
+  })
+});
+
 client.on('message', async message =>{
 	    let emoji = {
-        right: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'right')}`,
-        wrong: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'cd')}`,
-        no: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'no')}`,
-        load: `${client.guilds.find(r => r.id === '569987960989155340').emojis.find(e => e.name === 'load')}`
+        right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+        wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'cd')}`,
+        no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+        load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
       
     }
     if (message.author.boss) return;
@@ -515,17 +551,17 @@ client.on('message', async message =>{
       let command = message.content.split(" ")[0];
        command = command.slice(prefix.length);
       let args = message.content.split(" ").slice(1);
-      if (command == "mute") {
+      if (command ==  "mute") {
           if (!message.channel.guild) return;
               if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return message.reply(`${emoji.cd} | **You Don't Have Enough Permissions**.`).then(msg => msg.delete(5000));
           if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply(`${emoji.cd} | **I Don't Have Enough Permissions**`).then(msg => msg.delete(5000));;
           let user = message.mentions.users.first();
           let muteRole = message.guild.roles.find("name", "Muted");
           if (!muteRole) return message.reply(`${emoji.load} | **Please Make A Role With Name __\`\`Muted\`\`__`).then(msg => {msg.delete(5000)});
-          if (message.mentions.users.size < 1) return message.reply(`$[emoji.load} | **Mention A Member**.`).then(msg => {msg.delete(5000)});
+          if (message.mentions.users.size < 1) return message.reply(`${emoji.load} | **Mention A Member**.`).then(msg => {msg.delete(5000)});
           let reason = message.content.split(" ").slice(2).join(" ");
           message.guild.member(user).addRole(muteRole);
-          message.channel.sendMessage(`${emoji.right} | **${user} took mute by ${message.author.tag}**.`);
+          message.channel.sendMessage(`${emoji.right} | **${user} Muted by <@${message.author.id}>**.`);
           var muteembeddm = new Discord.RichEmbed()
           .setAuthor(`Muted!`, user.displayAvatarURL)
           .setDescription(`      
@@ -876,6 +912,7 @@ client.on("message", async function (message) {
         break;
     }
 });
+
 
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
