@@ -272,73 +272,53 @@ const embed = new Discord.RichEmbed()
     if (err) console.log(err)
   });
 })
-/*
-client.on('message', message => {
-    if (message.content.startsWith(prefix + "user")) {
-      var status = {
-        "online": "Online.",
-        "idle": "Idle.",
-        "dnd": "Do Not Disturb.",
-        "offline": "Offline."
-    };
-                     if(!message.channel.guild) return message.reply(`** | This Command Only For Servers**`);
-        message.guild.fetchInvites().then(invs => {
-            let member = client.guilds.get(message.guild.id).members.get(message.author.id);
-            
-            var args = message.content.split(" ").slice(1);
-            let user = message.mentions.users.first();
-            var men = message.mentions.users.first();
-            var heg;
-         // let coins;
-          let avatar;
-        let bott;
-            if (men) {
-                heg = men
-            } else {
-                heg = message.author
-            }
-            var mentionned = message.mentions.members.first();
-            var h;
-            if (mentionned) {
-                h = mentionned
-            } else {
-                h = message.member
-            }
-          if(heg.avatarURL !== null){
-            avatar = `Yes`
-          }else{
-            avatar = "No Avatar"
-          }
-          if(heg.bot){
-            bott = "Yes"
-          }else{
-            bott = "No"
-          }
-          
-          
-  
-          let personalInvites = invs.filter(i => i.inviter.id === h.id);
-            let inviteCount = personalInvites.reduce((p, v) => v.uses + p, 0);
-                      let roles = h.roles.map(r => r).slice(1 , 3).toString() + '\n' + h.roles.map(r => r).slice(3 , 6).toString();
 
-           // moment.locale('ar-TN');
-            var id = new Discord.RichEmbed()
-                .setColor("#42A9C9")
-                .setThumbnail(heg.avatarURL)
-                .addField(`Username: `, ` **${heg.username} \`(${heg.id})\`** `)
-                .addField(`About: `, `  Account Created At:** \`${moment(heg.createdTimestamp).format('D/MM/YYYY h:mm a')}\` | \`${moment(heg.createdAt).fromNow()}\` **
-User Status: **\`${heg.presence.game || 'No Thing'}\`**
-Bot: **\`${bott}\`**
-Avatar: **\`${avatar}\`**`)
-           // .addField("Economy", `Coins: **\`${coins}\`**`)
-                .addField(` Invites: `, ` **${inviteCount}**`)
-                .addField(` Roles: `,` ${roles}`)
-                .setFooter(`Requested By: ${message.author.username}`, message.author.avatarURL)
-            .setTimestamp();
-            message.channel.sendEmbed(id);
-        })
-    }
-});*/
+client.on("message", message)
+
+client.on("message", message => {
+  if(message.content === prefix + "coins") {
+    if(!coins[message.author.id]){
+    coins[message.author.id] = {
+      coins: 0
+    };
+  }
+  let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "dollar");
+  
+  
+  let men = message.mentions.users.first()
+  
+  
+
+  let uCoins = coins[message.author.id].coins;
+  
+  if (!men) {
+
+
+  let coinEmbed = new Discord.RichEmbed()
+  //.setAuthor(message.author.username)
+  //.setThumbnail(message.author.avatarURL)
+  .setColor("#36393e")
+  .setDescription(`${em1} | **__${message.author.username}__ has : \`\`${uCoins}€\`\`**`)
+  .setFooter(`${message.author.tag}`, message.author.avatarURL)
+
+message.channel.send(coinEmbed)
+  } else if (men) {
+    let mCoins = coins[message.mentions.users.first().id].coins
+    let coinEmbed = new Discord.RichEmbed()
+  //.setAuthor(men.username)
+  //.setThumbnail(men.avatarURL)
+  .setColor("#36393e")
+  .setDescription(`${em1} | **__${men.username}__ has : \`\`${mCoins}€\`\`**`)
+      .setFooter(`${men.tag}`, men.avatarURL)
+
+
+message.channel.send(coinEmbed)
+  }
+  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+if (err) message.channel.send(err)
+})
+  }
+})
 
 
 client.on('message', message => {
@@ -452,6 +432,7 @@ fs.readdir("./commands/", (err, files) => {
 });
 
 
+
 client.on("message", message => {
   //a little bit of data parsing/general checks
   if(message.author.bot) return;
@@ -488,7 +469,7 @@ client.on("guildCreate", async guild => {
 });
 
 client.on("guildDelete", async guild => {
-  let guildCreateDelete = client.channels.get("682368247697375499"); 
+  let guildCreateDelete = client.channels.get("682956726072246279"); 
   
   let leaveEmbed = new Discord.RichEmbed()
     .setThumbnail(guild.iconURL)
@@ -958,7 +939,44 @@ client.on("message",msg => {
 » \`\`.mute\`\` : To give a person mute , ${emoji.sys}
 » \`\`.unmute\`\` : To remove the mute from a person , ${emoji.sys}
 » \`\`.role\`\` : To give a person role , ${emoji.sys}
-» \`\`.roleremove\`\` : To remove a role from person , ${emoji.sys}`)
+» \`\`.roleremove\`\` : To remove a role from person , ${emoji.sys}
+» \`\`.server\`\` : To see imformations your server , ${emoji.sys}`)
+  }
+})
+
+client.on("message",msg => {
+  let emoji = {
+    coins: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'money')}`
+}
+  if(msg.content.startsWith('.hcoins')) {
+    msg.channel.send(`• Coins commands :
+» \`\`.coins\`\` : To show your coins amount , ${emoji.coins}
+» \`\`.pay\`\` : To give a person coins , ${emoji.coins}
+» \`\`.claim\`\` : To take your daily reward, ${emoji.coins}`)
+  }
+})
+
+client.on("message",msg => {
+  let emoji = {
+    top: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'top')}`
+}
+  if(msg.content.startsWith('.htop')) {
+    msg.channel.send(`• Top commands :
+» \`\`.top\`\` : To see general top , ${emoji.cd}
+» \`\`.top text\`\` : To see top text , ${emoji.sys}
+» \`\`.top voice\`\` : To see top voice , ${emoji.coins}
+» \`\`.topservers\`\` : To see top servers , ${emoji.top}`)
+  }
+})
+
+client.on("message",msg => {
+  let emoji = {
+    pp: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'pp')}`
+}
+  if(msg.content.startsWith('.other')) {
+    msg.channel.send(`• Others commands :
+» \`\`.invite\`\` : To see general commands , ${emoji.pp}
+» \`\`.support\`\` : To see system commands , ${emoji.pp}`)
   }
 })
 

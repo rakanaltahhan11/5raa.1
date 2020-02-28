@@ -42,9 +42,11 @@ message.channel.send(coinEmbed)
 
 message.channel.send(coinEmbed)
   }
-  
+  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+if (err) message.channel.send(err)
+})
 }
 
 module.exports.help = {
-  name: "coins"
+  name: ""
 }

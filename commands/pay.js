@@ -164,7 +164,7 @@ module.exports.run = async (client, message, args, lang) => {
   //message.channel.send(`${message.author} has given ${pUser} ${args[1]} NCoins.`);
   
   
-fs.writeFile("/coins.json", JSON.stringify(coins), (err) => {
+fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
 if (err) message.channel.send(err)
 })
   
