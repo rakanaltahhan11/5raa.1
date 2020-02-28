@@ -321,7 +321,7 @@ client.on("message", message => {
 
 
 client.on("guildCreate", async guild => {
-  let guildCreateChannel = client.channels.get("682239702836838401"); 
+  let guildCreateChannel = client.channels.get("682368247697375499"); 
   
   
     
@@ -340,7 +340,7 @@ client.on("guildCreate", async guild => {
 });
 
 client.on("guildDelete", async guild => {
-  let guildCreateDelete = client.channels.get("682239725897383946"); 
+  let guildCreateDelete = client.channels.get("682368247697375499"); 
   
   let leaveEmbed = new Discord.RichEmbed()
     .setThumbnail(guild.iconURL)
