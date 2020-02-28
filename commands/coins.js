@@ -1,6 +1,5 @@
 
-/*const Discord = require("discord.js");
-const fs = require("fs")
+const Discord = require("discord.js");
 const coins = require("../coins.json")
 
 module.exports.run = async (client, message, args) => {
@@ -48,7 +47,7 @@ message.channel.send(coinEmbed)
 module.exports.help = {
   name: "coins"
 }
-*/
+
 
 /*const Discord = require("discord.js");
 const fs = require("fs");
@@ -106,7 +105,7 @@ module.exports.help = {
   name: "coins" // لا تسوي شي  سويت هل كوماند  بل server.js
 }*/
 
-const Discord = require("discord.js");
+/*const Discord = require("discord.js");
 let coins = require("../coins.json");
 
 module.exports.run = async (bot, message, args) => {
@@ -138,7 +137,7 @@ module.exports.run = async (bot, message, args) => {
 
 message.channel.send(coinEmbed)
   } else if (men) {
-    let mCoins = coins[message.mentions.users.first().id].coins;
+    let mCoins = coins[message.mentions.users.first().id].coins
     let coinEmbed = new Discord.RichEmbed()
   //.setAuthor(men.username)
   //.setThumbnail(men.avatarURL)
@@ -154,3 +153,4 @@ message.channel.send(coinEmbed)
 module.exports.help = {
   name: "coins"
 }
+*/
