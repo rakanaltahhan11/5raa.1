@@ -197,7 +197,7 @@ message.channel.send(`You set you Coins to __${coins[message.author.id].coins}__
     if (err) console.log(err)
   });
 })
-
+/*
 client.on('message', message => {
     if (message.content.startsWith(prefix + "user")) {
       var status = {
@@ -263,7 +263,73 @@ Avatar: **\`${avatar}\`**`)
             message.channel.sendEmbed(id);
         })
     }
-});
+});*/
+
+
+client.on('message', message => {
+   let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "dollar");
+  let em2 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "es");
+  let em3 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "balance");
+  let em4 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "aaaa");
+  let em6 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "plus");
+  let em5 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "pen");
+if (message.content.startsWith(prefix + "id")) {
+   var args = message.content.split(" ").slice(1);
+  message.guild.fetchInvites().then(invs => {
+     let user = message.mentions.users.first();
+  var men = message.mentions.users.first();
+
+     var heg;
+     if(men) {
+        heg = men 
+     } else {
+        heg = message.author
+     }
+     var mentionned = message.mentions.members.first();
+     var h;
+     if(mentionned) {
+        h = mentionned
+     } else {
+        h = message.member
+     }
+           moment.locale('EN-US');
+     let personalInvites = invs.filter(i => i.inviter.id === h.id);
+            let inviteCount = personalInvites.reduce((p, v) => v.uses + p, 0);
+     var guild = message.guild
+     let inviteandstuff = undefined;
+     
+   if (inviteandstuff == undefined) {
+       inviteandstuff = "";
+       }
+      guild.fetchInvites()
+       .then(invites => {
+        invites.forEach(invite => {
+           if (invite.inviter === heg) {
+             inviteandstuff=invite.inviter
+                
+               }
+             });
+    
+             let roles = h.roles.map(r => r).slice(1 , 3).toString() + '\n' + h.roles.map(r => r).slice(3 , 6).toString();
+        let uCoins = coins[message.author.id].coins;
+
+               var id = new Discord.RichEmbed()
+     .setDescription(`**• Some information about __${message.author.username}__ :
+\`\`\`js
+ID : ${message.author.id}
+Status : ${message.author.presence.status.toUpperCase()}
+He is a bot : ${message.author.bot.toString().toUpperCase()}\`\`\`**`)
+     .addField(`${em5} | Joined discord from :`, `__${moment(heg.createdTimestamp).format('`D/M/YYYY HH:mm`')}__ **\n** \**${moment(heg.createdTimestamp).fromNow()}\**` ,true) 
+     .addField(`${em4} | Joined server from :`, `__${moment(h.joinedAt).format('`D/M/YYYY HH:mm`')}__ \n \**${moment(h.joinedAt).fromNow()}\**`, true)               
+     .addField(`${em3} | Invites :`, `**__${inviteCount}__**`, true)  
+     .addField(`${em1} | Your coins :`, `**__${uCoins}__**`, true)          
+     .addField(`${em6} | Roles : `,`**__${roles}__**`)
+     .addField(`${em2} | I see you in :`,`** __${client.guilds.filter(g => g.members.find(m => m.id == message.author.id)).size}__ Guild** `)
+             
+     .setThumbnail(heg.avatarURL)
+     message.channel.send(id)
+      })
+})}});
 
 client.on('message', Alpahforever => {
 
