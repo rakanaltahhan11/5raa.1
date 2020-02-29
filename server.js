@@ -1469,6 +1469,10 @@ client.on("message",msg => {
 » \`\`.unmute\`\` : To remove the mute from a person , ${emoji.sys}
 » \`\`.role\`\` : To give a person role , ${emoji.sys}
 » \`\`.roleremove\`\` : To remove a role from person , ${emoji.sys}
+» \`\`.server\`\` : To see imformations your server , ${emoji.sys}
+» \`\`.warn\`\` : To warn a person , ${emoji.sys}
+» \`\`.warns\`\` : To see the warns , ${emoji.sys}
+» \`\`.warnremove\`\` : To remove the warn , ${emoji.sys}
 » \`\`.server\`\` : To see imformations your server , ${emoji.sys}`)
   }
 })
@@ -1660,14 +1664,13 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 		embed.setTitle(`**${count} Warnings** [ ${page}/4 ]`)
 		message.channel.send(embed)
 	};
-	if (command == 'wremove' || command == 'w') {
+	if (command == 'warnremove' || command == 'w') {
 		if (!message.member.hasPermission('MANAGE_GUILD')) return;
 		if (!warning[message.guild.id]) warning[message.guild.id] = {
 			warns: []
 		};
 		let args = message.content.split(" ")[1];
-		if (!args) return message.channel.send(
-			`**:rolling_eyes: Please specify warning number or user mention or (all) to delete all warnings.**`);
+		if (!args) return message.channel.send(`${emoji.load} | Please specify warning number or user mention or (all) to delete all warnings.`);
 		let user = message.mentions.members.first();
 		if (user) {
 			let C = 0;
@@ -1681,8 +1684,8 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 				delete w.time;
 				C++;
 			})
-			if (C === 0) return message.channel.send(`**:mag: I can't find the warning that you're looking for.**`)
-			return message.channel.send('**✅ ' + C + ' warnings has been removed.**');
+    if (C === 0) return message.channel.send(`${emoji.load} | I can't find the warning that you're looking for.`)
+			return message.channel.send(`${emoji.right}` + C + ' warnings has been removed.');
 		};
 		if (args == 'all') {
 			let c = 0;
@@ -1699,10 +1702,9 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 			fs.writeFile("./warning.json", JSON.stringify(warning), (err) => {
 				if (err) console.error(err)
 			})
-			return message.channel.send('**✅ ' + c + ' warnings has been removed.**')
+			return message.channel.send(`${emoji.right}` + c + ' warnings has been removed.')
 		}
-		if (isNaN(args)) return message.channel.send(
-			`**:rolling_eyes: Please specify warning number or user mention or (all) to delete all warnings.**`);
+		if (isNaN(args)) return message.channel.send(`${emoji.load} | Please specify warning number or user mention or (all) to delete all warnings.`);
 		let W = warning[message.guild.id].warns;
 		let find = false;
 		W.forEach(w => {
@@ -1713,10 +1715,10 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 				delete w.by;
 				delete w.time;
 				find = true;
-				return message.channel.send('**✅ 1 warnings has been removed.**')
+				return message.channel.send(`${emoji.right} | 1 warnings has been removed.`)
 			}
 		});
-		if (find == false) return message.channel.send(`**:mag: I can't find the warning that you're looking for.**`)
+		if (find == false) return message.channel.send(`${emoji.load} | I can't find the warning that you're looking for.`)
 	}
 });
 const SQLite = require('sqlite'); 
