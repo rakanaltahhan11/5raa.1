@@ -1796,4 +1796,4 @@ if(message.member.hasPermission("MANAGE_GUILD")) return;
   }
 });
 
-client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
+client.login(process.env.BOT_TOKEN)
