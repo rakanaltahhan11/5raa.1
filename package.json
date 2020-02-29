@@ -44,7 +44,8 @@
     "sqlite3": "^4.1.1",
     "stackjs": "^0.1.0",
     "stackos": "^1.1.0",
-    "to-time": "^1.0.2"
+    "to-time": "^1.0.2",
+    "warning": "^4.0.3"
   },
   "engines": {
     "node": "8.4.0"

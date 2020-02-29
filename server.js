@@ -25,6 +25,36 @@ setInterval(() => {
   http.get(`https://nikonbott.glitch.me/`);
 }, 280000);
 
+var voiceonline = require ("./voiceonline.json");
+client .on ("message", async (Message) => {
+    if (!Message ["guild"] ||
+    Message ["author"].bot) return false;
+
+    if (Message ["content"].startsWith (prefix + "setvc")) {
+        if (!Message ["member"].hasPermission ("MANAGE_CHANNELS")) return Message ["reply"] ("**You need `MANAGE CHANNELS` Permissions to execute this command.**");
+        var name = Message ["content"].split (" ").slice (1).join (" ");
+        if (!name) return Message ["reply"] ("**Specify a name. please type %vo% for voiceonline numbers\nExample: " + prefix + "setvc Voice Online [%vo%]**");
+        var onlines = Message ["guild"].members.filter (m => m.voiceChannel).size;
+        Message ["guild"].createChannel (name ["replace"] ("%vo%", onlines), "voice") .then (async (voice) => {
+            voiceonline [Message ["guild"].id] = {
+                "ch": (voice ["id"]),
+                "name": (name)
+            };
+            saveVoiceOnline ();
+            Message ["channel"].send ("**Successfully created voiceonline **")
+        });
+    }
+})
+.on ("voiceStateUpdate", async (Steve, Akame) => {
+    if (!voiceonline [Steve ["guild"].id]) return console.log ("nope");
+    var channel = Akame ["guild"].channels.get (voiceonline [Steve ["guild"].id].ch);
+    if (!channel) return console.log ("no channel");
+    channel ["setName"] (voiceonline [Steve ["guild"].id].name.replace ("%vo%", Steve ["guild"].members.filter (m => m.voiceChannel).size));
+})
+
+function saveVoiceOnline() {
+    (require ("fs")) ["writeFileSync"] ("./voiceonline.json", JSON ["stringify"] (voiceonline, null, 4))
+}
 
 
 const setc = require("./setc.json")
@@ -99,7 +129,9 @@ client.on("message", async message => {
      .setDescription(`${emoji.right} | The tickets category has been set to \`\`${newcategory}\`\``)  
      .setColor(embedSuccess);
 	message.channel.send(D1);
-		
+		fs.writeFile("./setc.json", JSON.stringify(setc, null, 4), err => {
+        if(err) throw err;
+          });
 	}
 });
 
@@ -141,9 +173,12 @@ client.on("message", async message => {
      .setDescription(`${emoji.right} | The tickets role has been set to \`\`${newrole}\`\``)  
      .setColor(embedSuccess);
 	message.channel.send(D1);
-		
+		fs.writeFile("./setrole.json", JSON.stringify(setrole, null, 4), err => {
+        if(err) throw err;
+          });
 	}
 });
+
 
 client.on("message", async message => {
    
@@ -1510,5 +1545,202 @@ Uptime : ${pretty(client.uptime, { verbose: true })}\`\`\`**`)
       dark.channel.send(night)
     }
 });
+let warning = JSON.parse(fs.readFileSync('./warning.json', 'utf8'));
+client.on('message', message => {
+	if (message.author.bot || message.channel.type == "dm" || !message.channel.guild) return;
+	if (!message.content.startsWith(prefix)) return;
+	let command = message.content.split(" ")[0];
+	command = command.slice(prefix.length);
+	if (command == 'warn') {
+		if (!message.member.hasPermission('MANAGE_GUILD')) return;
+		if (!warning[message.guild.id]) warning[message.guild.id] = {
+			warns: []
+		}
+		let T = warning[message.guild.id].warns;
+		let user = message.mentions.users.first();
+		if (!user) return message.channel.send(`**:rolling_eyes: I can't find this member**`)
+		let reason = message.content.split(" ").slice(2).join(" ");
+		if (!reason) return message.channel.send(`**:rolling_eyes: Please specify a reason.**`)
+		let W = warning[message.guild.id].warns;
+		let ID = 0;
+		let leng = 0;
+		W.forEach(w => {
+			ID++;
+			if (w.id !== undefined) leng++;
+		})
+		if (leng === 90) return message.channel.send(`** You Can't Give More than \`90\` Warns**, please reset the warn list.`)
+		T.push({
+			user: user.id,
+			by: message.author.id,
+			reason: reason,
+			time: moment(Date.now()).format('llll'),
+			id: ID + 1
+		})
+		message.channel.send(`**✅ @${user.username} warned!**`);
+		fs.writeFile("./warning.json", JSON.stringify(warning), (err) => {
+			if (err) console.error(err)
+		});
+		fs.writeFile("./warning.json", JSON.stringify(warning), (err) => {
+			if (err) console.error(err)
+		});
+		user.send(new Discord.RichEmbed().addField('**:warning: You were warned!**', reason)
+			.setFooter(message.guild.name, message.guild.iconURL).setTimestamp().setColor('#fffe62'));
+		return;
+	}
+	if (command == 'warns') {
+		if (!message.member.hasPermission('MANAGE_GUILD')) return;
+		if (!warning[message.guild.id]) warning[message.guild.id] = {
+			warns: []
+		}
+		let count = 0;
+		let page = message.content.split(" ")[1];
+		if (!page || isNaN(page)) page = 1;
+		if (page > 4) return message.channel.send('**Warnings are only recorded on 4 pages!**')
+		let embed = new Discord.RichEmbed().setFooter(message.author.username, message.author.avatarURL)
+		let W = warning[message.guild.id].warns;
+		W.forEach(w => {
+			if (!w.id) return;
+			count++;
+			if (page == 1) {
+				if (count > 24) return null
+				let reason = w.reason;
+				let user = w.user;
+				let ID = w.id;
+				let By = w.by;
+				let time = w.time;
+				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
+User: <@${user}>\n\`\`\`${reason}\`\`\``);
+				if (count == 24) embed.addField('**:sparkles: More ?**', `${message.content.split(" ")[0]} 2`);
+			}
+			if (page == 2) {
+				if (count <= 24) return null;
+				if (count > 45) return null
+				let reason = w.reason;
+				let user = w.user;
+				let ID = w.id;
+				let By = w.by;
+				let time = w.time;
+				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
+User: <@${user}>\n\`\`\`${reason}\`\`\``);
+				if (count == 45) embed.addField('**:sparkles: More ?**', `${message.content.split(" ")[0]} 3`);
+			}
+			if (page == 3) {
+				if (count <= 45) return null;
+				if (count > 69) return null
+				let reason = w.reason;
+				let user = w.user;
+				let ID = w.id;
+				let By = w.by;
+				let time = w.time;
+				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
+User: <@${user}>\n\`\`\`${reason}\`\`\``);
+				if (count == 69) embed.addField('**:sparkles: More ?**', `${message.content.split(" ")[0]} 4`);
+			}
+			if (page == 4) {
+				if (count <= 69) return null;
+				if (count > 92) return null
+				let reason = w.reason;
+				let user = w.user;
+				let ID = w.id;
+				let By = w.by;
+				let time = w.time;
+				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
+User: <@${user}>\n\`\`\`${reason}\`\`\``);
+				if (count == 64) embed.addField('**FULL**', `** **`);
+			}
+		});
+		embed.setTitle(`**${count} Warnings** [ ${page}/4 ]`)
+		message.channel.send(embed)
+	};
+	if (command == 'removewarn' || command == 'rm') {
+		if (!message.member.hasPermission('MANAGE_GUILD')) return;
+		if (!warning[message.guild.id]) warning[message.guild.id] = {
+			warns: []
+		};
+		let args = message.content.split(" ")[1];
+		if (!args) return message.channel.send(
+			`**:rolling_eyes: Please specify warning number or user mention or (all) to delete all warnings.**`);
+		let user = message.mentions.members.first();
+		if (user) {
+			let C = 0;
+			let a = warning[message.guild.id].warns
+			a.forEach(w => {
+				if (w.user !== user.id) return
+				delete w.user;
+				delete w.reason;
+				delete w.id;
+				delete w.by;
+				delete w.time;
+				C++;
+			})
+			if (C === 0) return message.channel.send(`**:mag: I can't find the warning that you're looking for.**`)
+			return message.channel.send('**✅ ' + C + ' warnings has been removed.**');
+		};
+		if (args == 'all') {
+			let c = 0;
+			let W = warning[message.guild.id].warns;
+			W.forEach(w => {
+				if (w.id !== undefined) c++;
+			})
+			warning[message.guild.id] = {
+				warns: []
+			};
+			fs.writeFile("./warning.json", JSON.stringify(warning), (err) => {
+				if (err) console.error(err)
+			})
+			fs.writeFile("./warning.json", JSON.stringify(warning), (err) => {
+				if (err) console.error(err)
+			})
+			return message.channel.send('**✅ ' + c + ' warnings has been removed.**')
+		}
+		if (isNaN(args)) return message.channel.send(
+			`**:rolling_eyes: Please specify warning number or user mention or (all) to delete all warnings.**`);
+		let W = warning[message.guild.id].warns;
+		let find = false;
+		W.forEach(w => {
+			if (w.id == args) {
+				delete w.user;
+				delete w.reason;
+				delete w.id;
+				delete w.by;
+				delete w.time;
+				find = true;
+				return message.channel.send('**✅ 1 warnings has been removed.**')
+			}
+		});
+		if (find == false) return message.channel.send(`**:mag: I can't find the warning that you're looking for.**`)
+	}
+});
+const SQLite = require('sqlite'); 
+const path = require('path'); 
+const invites = {}; 
+
+client.on("ready", () => { 
+	client.guilds.forEach(g => { 
+		g.fetchInvites().then(guildInvites => { 
+				invites[g.id] = guildInvites; 
+		});
+});
+});
+SQLite.open(path.join(__dirname, 'links.sql')) 
+.then(() => { 
+	console.log('Opened') 
+	SQLite.run(`CREATE TABLE IF NOT EXISTS linkSysteme (code TEXT, id VARCHAR(30))`) 
+}) 
+.catch(err => console.error(err)) 
+
+client.on("message", async msg => { 
+	if(msg.author.bot || !msg.channel.guild) return; 
+	if(msg.content.startsWith("#link")) {
+		let invite = await msg.channel.createInvite({
+			maxAge: 86400,
+			maxUses: 5
+		}, `Requested by ${msg.author.tag}`).catch(console.log);
+		
+		SQLite.run(`INSERT INTO linkSysteme VALUES ('${invite.code}','${msg.author.id}')`)
+		msg.author.send(invite ? `**مدة الرابط : يـوم عدد استخدامات الرابط : 5 **:\n ${invite}` : "يوجد خلل في البوت :( \n  يتم حل المشكل قريبا ...");
+	}
+
+})
 
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
