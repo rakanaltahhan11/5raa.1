@@ -1547,6 +1547,14 @@ Uptime : ${pretty(client.uptime, { verbose: true })}\`\`\`**`)
 });
 let warning = JSON.parse(fs.readFileSync('./warning.json', 'utf8'));
 client.on('message', message => {
+    let emoji = {
+    right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+    wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+    no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+       warn: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'warn')}`,
+    load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+  
+}
 	if (message.author.bot || message.channel.type == "dm" || !message.channel.guild) return;
 	if (!message.content.startsWith(prefix)) return;
 	let command = message.content.split(" ")[0];
@@ -1558,9 +1566,9 @@ client.on('message', message => {
 		}
 		let T = warning[message.guild.id].warns;
 		let user = message.mentions.users.first();
-		if (!user) return message.channel.send(`**:rolling_eyes: I can't find this member**`)
+		if (!user) return message.channel.send(`${emoji.load} | I can't find this member.`)
 		let reason = message.content.split(" ").slice(2).join(" ");
-		if (!reason) return message.channel.send(`**:rolling_eyes: Please specify a reason.**`)
+		if (!reason) return message.channel.send(`${emoji.load} | Please write a reason.`)
 		let W = warning[message.guild.id].warns;
 		let ID = 0;
 		let leng = 0;
@@ -1568,7 +1576,7 @@ client.on('message', message => {
 			ID++;
 			if (w.id !== undefined) leng++;
 		})
-		if (leng === 90) return message.channel.send(`** You Can't Give More than \`90\` Warns**, please reset the warn list.`)
+		if (leng === 90) return message.channel.send(`${emoji.no} | You Can't Give More than \`90\` Warns, please reset the warn list.`)
 		T.push({
 			user: user.id,
 			by: message.author.id,
@@ -1583,7 +1591,7 @@ client.on('message', message => {
 		fs.writeFile("./warning.json", JSON.stringify(warning), (err) => {
 			if (err) console.error(err)
 		});
-		user.send(new Discord.RichEmbed().addField('**:warning: You were warned!**', reason)
+		user.send(new Discord.RichEmbed().addField(`${emoji.warn} | You were warned!`, reason)
 			.setFooter(message.guild.name, message.guild.iconURL).setTimestamp().setColor('#fffe62'));
 		return;
 	}
@@ -1595,7 +1603,7 @@ client.on('message', message => {
 		let count = 0;
 		let page = message.content.split(" ")[1];
 		if (!page || isNaN(page)) page = 1;
-		if (page > 4) return message.channel.send('**Warnings are only recorded on 4 pages!**')
+		if (page > 4) return message.channel.send('Warnings are only recorded on 4 pages!')
 		let embed = new Discord.RichEmbed().setFooter(message.author.username, message.author.avatarURL)
 		let W = warning[message.guild.id].warns;
 		W.forEach(w => {
@@ -1610,7 +1618,7 @@ client.on('message', message => {
 				let time = w.time;
 				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
 User: <@${user}>\n\`\`\`${reason}\`\`\``);
-				if (count == 24) embed.addField('**:sparkles: More ?**', `${message.content.split(" ")[0]} 2`);
+				if (count == 24) embed.addField(`${emoji.load} | More ?`, `${message.content.split(" ")[0]} 2`);
 			}
 			if (page == 2) {
 				if (count <= 24) return null;
@@ -1622,7 +1630,7 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 				let time = w.time;
 				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
 User: <@${user}>\n\`\`\`${reason}\`\`\``);
-				if (count == 45) embed.addField('**:sparkles: More ?**', `${message.content.split(" ")[0]} 3`);
+				if (count == 45) embed.addField(`${emoji.load} | More ?`, `${message.content.split(" ")[0]} 3`);
 			}
 			if (page == 3) {
 				if (count <= 45) return null;
@@ -1634,7 +1642,7 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 				let time = w.time;
 				embed.addField(`⏱ ${time}`, `Warn ID (**${ID}**) - By <@${By}>
 User: <@${user}>\n\`\`\`${reason}\`\`\``);
-				if (count == 69) embed.addField('**:sparkles: More ?**', `${message.content.split(" ")[0]} 4`);
+				if (count == 69) embed.addField(`${emoji.load} | More ?`, `${message.content.split(" ")[0]} 4`);
 			}
 			if (page == 4) {
 				if (count <= 69) return null;
@@ -1722,26 +1730,7 @@ client.on("ready", () => {
 		});
 });
 });
-SQLite.open(path.join(__dirname, 'links.sql')) 
-.then(() => { 
-	console.log('Opened') 
-	SQLite.run(`CREATE TABLE IF NOT EXISTS linkSysteme (code TEXT, id VARCHAR(30))`) 
-}) 
-.catch(err => console.error(err)) 
 
-client.on("message", async msg => { 
-	if(msg.author.bot || !msg.channel.guild) return; 
-	if(msg.content.startsWith("#link")) {
-		let invite = await msg.channel.createInvite({
-			maxAge: 86400,
-			maxUses: 5
-		}, `Requested by ${msg.author.tag}`).catch(console.log);
-		
-		SQLite.run(`INSERT INTO linkSysteme VALUES ('${invite.code}','${msg.author.id}')`)
-		msg.author.send(invite ? `**مدة الرابط : يـوم عدد استخدامات الرابط : 5 **:\n ${invite}` : "يوجد خلل في البوت :( \n  يتم حل المشكل قريبا ...");
-	}
-
-})
 client.on("message", async message => {
   if (message.content.includes("discord.gg")) {
 if(message.member.hasPermission("MANAGE_GUILD")) return;
@@ -1749,60 +1738,5 @@ if(message.member.hasPermission("MANAGE_GUILD")) return;
     message.delete();
   }
 });
-client.on('message' , message => {
-if (message.author.bot) return;
-   if (message.content.startsWith(prefix + "ping")) {
-      message.channel.send('<a:Twix3:665472935602946056> Pinging....').then((msg) => {
-    let embed = new Discord.RichEmbed()
-   .addField("**<a:Twix3:665472935602946056> Time taken**",`**${msg.createdTimestamp - message.createdTimestamp}**`)
-   .addField("**<a:Twix3:665472935602946056> Discord API**",`**${Math.round(client.ping)}**`)
-   .setFooter(`NikonBot .`, message.guild.iconURL)
-   .setColor('#2dfc12')
-   msg.edit(embed)
-})
-}  
-});
-client.on('message', function(message) {
-    if(!message.channel.guild) return;
-    if (message.author.bot) return;
-    if (message.author.id === client.user.id) return;
-    if (message.author.equals(client.user)) return;
-    if (!message.content.startsWith(prefix)) return;
-    
-    var args = message.content.substring(prefix.length).split(' ');
-    switch (args[0].toLocaleLowerCase()) {
-    case "clear" :
-    message.delete()
-    if(!message.channel.guild) return
-    if(message.member.hasPermission(0x2000)){ if (!args[1]) {
-    message.channel.fetchMessages()
-    .then(messages => {
-    message.channel.bulkDelete(messages);
-    var messagesDeleted = messages.array().length;
-           let embed = new Discord.RichEmbed()
-     .addField("**Messages deleted size**",`**${messages.size}**`)
-     .setFooter(`NikonBot .`, message.guild.iconURL)
-     .setColor('RED')
-     return message.channel.send(embed).then(m => m.delete(5000))
-    })
-    } else {
-    let messagecount = parseInt(args[1]);
-    message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
-                 let embed = new Discord.RichEmbed()
-     .addField("**Messages deleted size**",`**` + args[1] + `**`)
-     .setFooter(`NikonBot .`, message.guild.iconURL)
-     .setColor('RED')
-     return message.channel.send(embed).then(m => m.delete(5000))
-    message.delete(60000);
-    }
 
-    } else {
-    var manage = new Discord.RichEmbed()
-    .setDescription('You Do Not Have Permission MANAGE_MESSAGES :(')
-    .setColor("RANDOM")
-    message.channel.sendEmbed(manage)
-    return;
-    }
-    }
-    });
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
