@@ -1652,7 +1652,7 @@ User: <@${user}>\n\`\`\`${reason}\`\`\``);
 		embed.setTitle(`**${count} Warnings** [ ${page}/4 ]`)
 		message.channel.send(embed)
 	};
-	if (command == 'removewarn' || command == 'rm') {
+	if (command == 'wremove' || command == 'w') {
 		if (!message.member.hasPermission('MANAGE_GUILD')) return;
 		if (!warning[message.guild.id]) warning[message.guild.id] = {
 			warns: []
