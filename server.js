@@ -1447,6 +1447,17 @@ client.on("message",msg => {
 
 client.on("message",msg => {
   let emoji = {
+    ac: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rule')}`
+}
+  if(msg.content.startsWith('.active')) {
+    msg.channel.send(`• Active commands :
+» \`\`.setselfrole\`\` : To see your avatar , ${emoji.ac}
+» \`\`.voiceonline\`\` : To filter members , ${emoji.ac}`)
+  }
+})
+
+client.on("message",msg => {
+  let emoji = {
     cd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'cd')}`
 }
   if(msg.content.startsWith('.general')) {
@@ -1469,7 +1480,7 @@ client.on("message",msg => {
 » \`\`.unmute\`\` : To remove the mute from a person , ${emoji.sys}
 » \`\`.role\`\` : To give a person role , ${emoji.sys}
 » \`\`.roleremove\`\` : To remove a role from person , ${emoji.sys}
-» \`\`.server\`\` : To see imformations your server , ${emoji.sys}
+» \`\`.clear\`\` : To clear the chat , ${emoji.sys}
 » \`\`.warn\`\` : To warn a person , ${emoji.sys}
 » \`\`.warns\`\` : To see the warns , ${emoji.sys}
 » \`\`.warnremove\`\` : To remove the warn , ${emoji.sys}
@@ -1512,6 +1523,45 @@ client.on("message",msg => {
 » \`\`.support\`\` : To see system commands , ${emoji.pp}`)
   }
 })
+
+
+const monsterking = JSON.parse(fs.readFileSync("./roleget.json", "utf8"));
+  
+client.on("message", monster =>{
+let commandking = monster.content.split(" ")[0].slice(prefix.length);
+let toxicmk = monster.content.split(" ").slice(1);
+if(monster.author.bot || monster.channel.type == 'dm') return;
+if(commandking === "setselfrole") {
+    let newKing = toxicmk.join(" ");
+    if(!monster.member.hasPermission("ADMINISTRATOR")) return monster.reply("You must have the **`ADMINISTRATOR`** permission!")
+    if(!monster.guild.me.hasPermission("ADMINISTRATOR")) return monster.reply("I must have the **`ADMINISTRATOR`** permissions!")
+    if(!monster.guild.roles.find(x => x.name === newKing)) return monster.reply("Usage: **`(role name)`**");
+    if(monster.guild.roles.find(x => x.name === newKing).position >= monster.guild.me.highestRole.position) return monster.reply("My highgest role must be higher than the mentioned role!")
+    monster.channel.send(`Successfully applied SelfRole to \`${newKing}\``)
+    monsterking[monster.guild.id] = {
+      guild: monster.guild.name,
+      role: newKing
+    }
+    fs.writeFile("./roleget.json", JSON.stringify(monsterking, null, 4), err => {
+        if(err) throw err;
+          });
+      }
+});
+client.on('message', monster => {
+let commandking = monster.content.split(" ")[0].slice(prefix.length);
+if(commandking === "selfrole"){
+  if(monster.author.bot || monster.channel.type == 'dm') return;
+  let rolegetid = monster.guild.roles.find(mk => mk.name === monsterking[monster.guild.id].role)
+    if(!rolegetid) return monster.channel.send("Sorry But there's no selrole Command on our system activated!!")
+        var mking = monster.member.roles.get(rolegetid.id);
+        if(mking) {
+          monster.channel.send(`${monster.author}, You've the role already`);
+       }else{
+         monster.member.addRole(rolegetid);
+         monster.channel.send(`Done! ${monster.author}, You've Got the role: \`${rolegetid.name}\``);
+        }
+  }
+});
 
 client.on('message', dark => {
        let servers = client.guilds.size;
