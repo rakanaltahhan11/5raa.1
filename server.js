@@ -25,7 +25,7 @@ setInterval(() => {
   http.get(`https://nikonbott.glitch.me/`);
 }, 280000);
 
-var voiceonline = require ("./voiceonline.json");
+const voiceonline = require ("./voiceonline.json");
 client .on ("message", async (Message) => {
     if (!Message ["guild"] ||
     Message ["author"].bot) return false;
@@ -1400,7 +1400,8 @@ client.on("message",msg => {
     top: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'top')}`,
     pp: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'pp')}`,
     give: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'giveaway')}`,
-    tic: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'tttds')}`
+    tic: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'tttds')}`,
+     ac: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rule')}`
 }
   if(msg.content.startsWith('.help')) {
     msg.channel.send(`• Help commands :
@@ -1408,6 +1409,7 @@ client.on("message",msg => {
 » \`\`.system\`\` : To see system commands , ${emoji.sys}
 » \`\`.hcoins\`\` : To see coins commands , ${emoji.coins}
 » \`\`.ghelp\`\` : To see giveaway commands , ${emoji.give}
+» \`\`.active\`\` : To see activaticon commands , ${emoji.ac}
 » \`\`.htop\`\` : To see top commands , ${emoji.top}
 » \`\`.thelp\`\` : To see ticket commands , ${emoji.tic}
 » \`\`.other\`\` : To see bot commands , ${emoji.pp}`)
@@ -1445,14 +1447,17 @@ client.on("message",msg => {
   }
 })
 
+
+
+
 client.on("message",msg => {
   let emoji = {
     ac: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rule')}`
 }
   if(msg.content.startsWith('.active')) {
     msg.channel.send(`• Active commands :
-» \`\`.setselfrole\`\` : To see your avatar , ${emoji.ac}
-» \`\`.voiceonline\`\` : To filter members , ${emoji.ac}`)
+» \`\`.setselfrole\`\` : To set self role , ${emoji.ac}
+» \`\`.setvc\`\` : To set the voice online , ${emoji.ac}`)
   }
 })
 
