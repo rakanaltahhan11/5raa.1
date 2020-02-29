@@ -1364,7 +1364,8 @@ client.on("message",msg => {
     coins: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'money')}`,
     top: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'top')}`,
     pp: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'pp')}`,
-    give: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'giveaway')}`
+    give: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'giveaway')}`,
+    tic: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'tttds')}`
 }
   if(msg.content.startsWith('.help')) {
     msg.channel.send(`• Help commands :
@@ -1373,10 +1374,24 @@ client.on("message",msg => {
 » \`\`.hcoins\`\` : To see coins commands , ${emoji.coins}
 » \`\`.ghelp\`\` : To see giveaway commands , ${emoji.give}
 » \`\`.htop\`\` : To see top commands , ${emoji.top}
+» \`\`.hticket\`\` : To see top commands , ${emoji.tic}
 » \`\`.other\`\` : To see bot commands , ${emoji.pp}`)
   }
 })
 
+
+client.on("message",msg => {
+  let emoji = {
+    give: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'giveaway')}`
+}
+  if(msg.content.startsWith('.ghelp')) {
+    msg.channel.send(`• Giveaway commands :
+» \`\`.gcreate\`\` : To create a giveaway , ${emoji.give}
+» \`\`.greroll\`\` : To choose a other person to win , ${emoji.give}
+» \`\`.gend\`\` : To end the giveaway , ${emoji.give}
+» \`\`.gedit\`\` : To edit the giveaway , ${emoji.give}`)
+  }
+})
 
 client.on("message",msg => {
   let emoji = {
