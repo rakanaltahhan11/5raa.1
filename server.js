@@ -1742,5 +1742,11 @@ client.on("message", async msg => {
 	}
 
 })
-
+client.on("message", async message => {
+  if (message.content.includes("discord.gg")) {
+if(message.member.hasPermission("MANAGE_GUILD")) return;
+    if (!message.channel.guild) return;
+    message.delete();
+  }
+});
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
