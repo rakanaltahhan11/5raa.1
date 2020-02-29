@@ -1374,7 +1374,7 @@ client.on("message",msg => {
 » \`\`.hcoins\`\` : To see coins commands , ${emoji.coins}
 » \`\`.ghelp\`\` : To see giveaway commands , ${emoji.give}
 » \`\`.htop\`\` : To see top commands , ${emoji.top}
-» \`\`.hticket\`\` : To see top commands , ${emoji.tic}
+» \`\`.thelp\`\` : To see ticket commands , ${emoji.tic}
 » \`\`.other\`\` : To see bot commands , ${emoji.pp}`)
   }
 })
@@ -1382,14 +1382,18 @@ client.on("message",msg => {
 
 client.on("message",msg => {
   let emoji = {
-    give: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'giveaway')}`
+    tic: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'tttds')}`
 }
-  if(msg.content.startsWith('.ghelp')) {
-    msg.channel.send(`• Giveaway commands :
-» \`\`.gcreate\`\` : To create a giveaway , ${emoji.give}
-» \`\`.greroll\`\` : To choose a other person to win , ${emoji.give}
-» \`\`.gend\`\` : To end the giveaway , ${emoji.give}
-» \`\`.gedit\`\` : To edit the giveaway , ${emoji.give}`)
+  if(msg.content.startsWith('.thelp')) {
+    msg.channel.send(`• ticket commands :
+» \`\`.new\`\` : To create a ticket  , ${emoji.tic}
+» \`\`.close\`\` : To close the ticket , ${emoji.tic}
+» \`\`.forceclose\`\` : To close ticket by force , ${emoji.tic}
+» \`\`.add\`\` : To add a person to your ticket , ${emoji.tic}
+» \`\`.remove\`\` : To te remove a person from your ticket , ${emoji.tic}
+» \`\`.rename\`\` : To rename a ticket , ${emoji.tic}
+» \`\`.setrole\`\` : To set a support role , ${emoji.tic}
+» \`\`.setcategory\`\` : To set a category for tickets , ${emoji.tic}`)
   }
 })
 
