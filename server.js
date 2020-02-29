@@ -1749,4 +1749,113 @@ if(message.member.hasPermission("MANAGE_GUILD")) return;
     message.delete();
   }
 });
+client.on('message' , message => {
+if (message.author.bot) return;
+   if (message.content.startsWith(prefix + "ping")) {
+      message.channel.send('<a:Twix3:665472935602946056> Pinging....').then((msg) => {
+    let embed = new Discord.RichEmbed()
+   .addField("**<a:Twix3:665472935602946056> Time taken**",`**${msg.createdTimestamp - message.createdTimestamp}**`)
+   .addField("**<a:Twix3:665472935602946056> Discord API**",`**${Math.round(client.ping)}**`)
+   .setFooter(`NikonBot .`, message.guild.iconURL)
+   .setColor('#2dfc12')
+   msg.edit(embed)
+})
+}  
+});
+client.on('message', function(message) {
+    if(!message.channel.guild) return;
+    if (message.author.bot) return;
+    if (message.author.id === client.user.id) return;
+    if (message.author.equals(client.user)) return;
+    if (!message.content.startsWith(prefix)) return;
+    
+    var args = message.content.substring(prefix.length).split(' ');
+    switch (args[0].toLocaleLowerCase()) {
+    case "clear" :
+    message.delete()
+    if(!message.channel.guild) return
+    if(message.member.hasPermission(0x2000)){ if (!args[1]) {
+    message.channel.fetchMessages()
+    .then(messages => {
+    message.channel.bulkDelete(messages);
+    var messagesDeleted = messages.array().length;
+           let embed = new Discord.RichEmbed()
+     .addField("**Messages deleted size**",`**${messages.size}**`)
+     .setFooter(`NikonBot .`, message.guild.iconURL)
+     .setColor('RED')
+     return message.channel.send(embed).then(m => m.delete(5000))
+    })
+    } else {
+    let messagecount = parseInt(args[1]);
+    message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
+                 let embed = new Discord.RichEmbed()
+     .addField("**Messages deleted size**",`**` + args[1] + `**`)
+     .setFooter(`NikonBot .`, message.guild.iconURL)
+     .setColor('RED')
+     return message.channel.send(embed).then(m => m.delete(5000))
+    message.delete(60000);
+    }
+
+    } else {
+    var manage = new Discord.RichEmbed()
+    .setDescription('You Do Not Have Permission MANAGE_MESSAGES :(')
+    .setColor("RANDOM")
+    message.channel.sendEmbed(manage)
+    return;
+    }
+    }
+    });
+let ar = JSON.parse(fs.readFileSync(`AutoRole.json`, `utf8`))
+client.on('message', message => { 
+  var sender = message.author
+
+if(!message.guild) return
+  if(!ar[message.guild.id]) ar[message.guild.id] = {
+  onoff: 'Off',
+  role: 'Member'
+  }
+
+if(message.content.startsWith(`.autorole`)) {
+         
+  let perms = message.member.hasPermission(`MANAGE_ROLES`)
+
+  if(!perms) return message.reply(`You don't have permissions, required permission : Manage Roles.`)
+  let args = message.content.split(" ").slice(1)
+  if(!args.join(" ")) return message.reply(`.autorole toggle اول شي ل تفعيل الاتو رول عليك كتابة`)
+  let state = args[0]
+  if(!state.trim().toLowerCase() == 'toggle' || !state.trim().toLowerCase() == 'setrole') return message.reply(`.autorole toggle اول شي ل تفعيل الاتو رول عليك كتابة `) 
+return message.reply(`.autorole set ثاني عليك ل تفعيل الاوتو رول عليك تحديد رول ب امر`) 
+    if(state.trim().toLowerCase() == 'toggle') { 
+     if(ar[message.guild.id].onoff === 'Off') return [message.channel.send(`**The Autorole Is __𝐎𝐍__ !**`), ar[message.guild.id].onoff = 'On']
+     if(ar[message.guild.id].onoff === 'On') return [message.channel.send(`**The Autorole Is __𝐎𝐅𝐅__ !**`), ar[message.guild.id].onoff = 'Off']
+    }
+   if(state.trim().toLowerCase() == 'set') {
+   let newRole = message.content.split(" ").slice(2).join(" ")
+   if(!newRole) return message.reply(`{prefix}autorole set [ROLE NAME]`)
+     if(!message.guild.roles.find(`name`,newRole)) return message.reply(`I Cant Find This Role.`)
+    ar[message.guild.id].role = newRole
+     message.channel.send(`**The AutoRole Has Been Changed to ${newRole}.**`)
+   } 
+         }
+if(message.content === '!info') {
+    let perms = message.member.hasPermission(`MANAGE_GUILD`) 
+    if(!perms) return message.reply(`You don't have permissions.`)
+    var embed = new Discord.RichEmbed()
+
+.addField(`Autorole : :sparkles:  `, `
+State : __${ar[message.guild.id].onoff}__
+Role : __${ar[message.guild.id].role}__`)
+
+
+    .setColor(`BLUE`)
+    message.channel.send({embed})
+  }
+
+
+    fs.writeFile("./AutoRole.json", JSON.stringify(ar), (err) => {
+    if (err) console.error(err)
+  });
+
+
+});
 client.login("NjgxOTg2MjYxNDMwNDM1ODg2.XlaAzw.zBWrax5m1VoRQhQOFfOdRKR5dLo")
