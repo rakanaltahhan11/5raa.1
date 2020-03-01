@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args) => {
   //.setAuthor(message.author.username)
   //.setThumbnail(message.author.avatarURL)
   .setColor("#36393e")
-  .setDescription(`${em1} | **__${message.author.username}__ has : \`\`${uCoins}€\`\`**`)
+  .setDescription(`${em1} | **__${message.author.username}__ has : \`\`€${uCoins}\`\`**`)
   .setFooter(`${message.author.tag}`, message.author.avatarURL)
 
 message.channel.send(coinEmbed)
@@ -35,7 +35,7 @@ message.channel.send(coinEmbed)
   //.setAuthor(men.username)
   //.setThumbnail(men.avatarURL)
   .setColor("#36393e")
-  .setDescription(`${em1} | **__${men.username}__ has : \`\`${mCoins}€\`\`**`)
+  .setDescription(`${em1} | **__${men.username}__ has : \`\`€${mCoins}\`\`**`)
       .setFooter(`${men.tag}`, men.avatarURL)
 
 
