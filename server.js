@@ -657,7 +657,7 @@ client.on('message', message => {
       .setColor("#f30707")
       
       //if(!premium.includes(message.guild.id)) return message.channel.send(embed); else
-        if(!devs.includes(message.author.id)) return; else
+        
         var top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
      let tl = "";
       for (let i=0;i<=10;i++) {
