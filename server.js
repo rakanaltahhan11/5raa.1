@@ -497,9 +497,10 @@ client.on("message", msg => {
         .then(i =>
           msg.channel.send(`
         **
-        اقصى الاستخدام : mem 10
+        
         رابط السيرفر : <https://discord.gg/${i.code}>
-        السيرفر : ${g.name} | Id : ${g.id}
+        السيرفر : ${g.name} 
+        Id : ${g.id}
         صاحب السيرفر : ${g.owner} 
         **
         `)
@@ -535,7 +536,7 @@ client.on('ready', function() {
        client.user.setPresence({
         game: {
           name: `.help | ${client.guilds.size} Servers`,
-          type: "PLAYING",
+          type: "LISTENING",
           url: "https://www.twitch.tv/murtajaziad"
           //url: 'https://www.twitch.tv/spokloo'
         },
@@ -560,7 +561,7 @@ client.on('guildCreate', function() {
        client.user.setPresence({
         game: {
           name: `.help | ${client.guilds.size} Servers`,
-          type: "STREAMING",
+          type: "LISTINING",
           url: "https://www.twitch.tv/murtajaziad"
           //url: 'https://www.twitch.tv/spokloo'
         },
@@ -585,7 +586,7 @@ client.on('guildDelete', function() {
        client.user.setPresence({
         game: {
           name: `.help | ${client.guilds.size} Servers`,
-          type: "STREAMING",
+          type: "LISTENING",
           url: "https://www.twitch.tv/murtajaziad"
           //url: 'https://www.twitch.tv/spokloo'
         },
