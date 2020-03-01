@@ -702,7 +702,7 @@ var embed = new Discord.RichEmbed()
 
 client.on('message', message => {
    
-    if (message.content.startsWith('.verfiy')) {
+    if (message.content.startsWith('.verify')) {
  let em1 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "rightt"); 
     let em2 = client.guilds.get("677267870471684096").emojis.find(r => r.name === "falsee"); 
         var activated_servers = ['681933999224258570'];
@@ -714,7 +714,7 @@ client.on('message', message => {
                 message.channel.send(`**${em2} | You Aren't Owner Of Any Server Where Bot Is In It**`)
 
             } else if (guildr >= 1) {
-                if (message.guild.member(message.author).roles.find(x => x.name === `Users`)) return message.channel.send(`**${em2} | You Has This Role Aready**`);;
+                if (message.guild.member(message.author).roles.find(x => x.name === `Users`)) return message.channel.send(`**${em2} | You have This Role Already**`);;
                 message.channel.send(`**${em1} | I Found You In A Server Which You Are The Owner**`)
                 message.member.addRole(message.guild.roles.find(x => x.name === `Users`));
             }
