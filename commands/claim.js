@@ -3,7 +3,6 @@ const client = new Discord.Client()
 let dailycooldown = new Set();
 let dailycdseconds = 86400;
 const fs = require("fs");
-//const coins = JSON.parse(fs.readFileSync("coins.json"))
 const coins = require("../coins.json");
 
 

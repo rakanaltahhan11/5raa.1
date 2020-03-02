@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-//const coins = JSON.parse(fs.readFileSync("coins.json"))
 const coins = require("../coins.json");
 
 var prefix = ".";

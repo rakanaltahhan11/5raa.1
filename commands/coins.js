@@ -2,6 +2,8 @@
 const Discord = require("discord.js");
 const coins = require("../coins.json")
 
+
+
 module.exports.run = async (client, message, args) => {
   //!coins
   if(!coins[message.author.id]){
