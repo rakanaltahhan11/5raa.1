@@ -650,26 +650,6 @@ client.on('message', function(message) {
     }
 });
 
-client.on('message', message => {
-    if (message.content.toLowerCase().startsWith(prefix + "topservers")) {
-      
-      
-      let embed = new Discord.RichEmbed()
-      .setColor("#f30707")
-      
-      //if(!premium.includes(message.guild.id)) return message.channel.send(embed); else
-        
-        var top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
-     let tl = "";
-      for (let i=0;i<=10;i++) {
-          if (!top[i]) continue;
-         tl += "`" + i + "`" +" - "+top[i].name+": "+ "**" + top[i].memberCount + "**" +"\n"+"\n"
-      }
-      message.channel.send(tl)
-    }
-});
-
-
 
     
  
@@ -1514,8 +1494,7 @@ client.on("message",msg => {
     msg.channel.send(`• Top commands :
 » \`\`.top\`\` : To see general top , ${emoji.cd}
 » \`\`.top text\`\` : To see top text , ${emoji.sys}
-» \`\`.top voice\`\` : To see top voice , ${emoji.coins}
-» \`\`.topservers\`\` : To see top servers , ${emoji.top}`)
+» \`\`.top voice\`\` : To see top voice , ${emoji.coins}`)
   }
 })
 
@@ -2406,7 +2385,7 @@ client.on('voiceStateUpdate', (voiceOld, voiceNew) => {
 });
 
 client.on('message', message => {
-    if (message.content.toLowerCase().startsWith(prefix + `top-servers`)) {
+    if (message.content.toLowerCase().startsWith(prefix + `topservers`)) {
 
         const top = client.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse()
         message.channel.send(`**⇏ Top 25 Servers: **\n1. **${top[0].name}**: ${top[0].memberCount} \n2. **${top[1].name}**: ${top[1].memberCount}.\n3. **${top[2].name}**: ${top[2].memberCount}.\n4. **${top[3].name}**: ${top[3].memberCount}.\n5. **${top[4].name}**: ${top[4].memberCount}.\n6. **${top[5].name}**: ${top[5].memberCount}.\n7. **${top[6].name}**: ${top[6].memberCount}.\n8. **${top[7].name}**: ${top[7].memberCount}.\n9. **${top[8].name}**: ${top[8].memberCount}.\n10. **${top[9].name}**: ${top[9].memberCount} .`)
