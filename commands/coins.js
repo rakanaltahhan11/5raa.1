@@ -1,7 +1,7 @@
 
 const Discord = require("discord.js");
 const coins = require("../coins.json")
-
+const fs = require("fs")
 
 
 module.exports.run = async (client, message, args) => {
@@ -43,7 +43,9 @@ message.channel.send(coinEmbed)
 
 message.channel.send(coinEmbed)
   }
-  
+  fs.writeFile("/coins.json", JSON.stringify(coins), (err) => {
+if (err) console.error(err)
+})
 }
 
 module.exports.help = {

@@ -40,6 +40,87 @@ setInterval(() => {
   http.get(`https://nikonbott.glitch.me/`);
 }, 280000);
 
+
+client.on("message", async message => {
+  if (message.author.bot || message.channel.type === "dm") return;
+  if (!message.content.startsWith(prefix)) return;
+  let cmd = message.content.split(" ")[0].substring(prefix.length);
+  let args = message.content.split(" ");
+  if (cmd === "hypixel") {
+    if (!args[1]) return message.reply("please specify a player name.");
+    let HypixelAPI = require("hypixel-api");
+    let client = new HypixelAPI("4856cc0d-031c-4b27-9d49-2edb7679853b");
+    let i = new Discord.RichEmbed();
+    i.setColor("#36393e");
+    let o = await message.channel.send(`**✽ Getting data, Please wait...**`);
+    client
+      .getPlayer("name", args[1])
+
+      .then(async player => {
+        let stats = player.player.achievements;
+        let overall = player;
+        const getDays = createdAt => {
+          let date = Date.now() - createdAt;
+          // return `${Math.round(date / 1000 / 60 / 60 / 24)} Days ago`;
+          return pretty(date);
+        };
+        i.setDescription(
+          `**❯ The player \`${overall.player.displayname}\`'s data**`
+        );
+        i.setThumbnail(`https://minotar.net/helm/${args[1]}`);
+        i.addField(
+          "**✽ SkyWars Kills**",
+          `» **__Kills Team__**: \`${
+            stats["skywars_kills_team"]
+          }\`\n» __**Kills Solo**__:
+   \`${stats["skywars_kills_solo"]}\`\n» __**Kills Mega**__ : \`${
+            stats["skywars_kills_mega"]
+          }\``,
+          true
+        );
+        i.addField(
+          "✽ SkyWars Wins",
+          `» __**Wins Team**__ : \`${
+            stats["skywars_wins_team"]
+          }\`\n» __**Wins Solo**__ : \`${
+            stats["skywars_wins_solo"]
+          }\`\n» __**Wins Mega**__ : \`${stats["skywars_wins_mega"]}\``,
+          true
+        );
+        i.addField(
+          "✽ BedWars Stats",
+          `» __**Broken Beads**__ : \`${stats["bedwars_beds"] ||
+            0}\`\n» __**BedWars Wins**__ : \`${stats["bedwars_wins"] ||
+            0}\`\n» __**BedWars Level**__ : \`${stats["bedwars_level"]}\``,
+          true
+        );
+        i.addField(
+          "✽ Other Stats",
+          `» __**Recent Game**__ : \`${overall.player.mostRecentGameType ||
+            "None"}\`\n» __**First Joined**__ : \`${getDays(
+            overall.player.firstLogin
+          )}\`\n» __**Last Joined**__ : \`${getDays(
+            overall.player.lastLogin
+          )}\``,
+          true
+        );
+        i.setFooter(
+          "Hypixel Stats | NikonBot ",
+          "https://hypixel.net/styles/hypixel-uix/xenforo/og-icon.png"
+        );
+        await message.channel.send(i);
+        await o.delete().catch(e => {});
+      })
+      .catch(async e => {
+        console.log(e.stack);
+        await o.delete().catch(e => {});
+        return message.channel.send(
+          `**I cant find player with name: \`${args[1]}\`**`
+        );
+      });
+  }
+});
+
 const voiceonline = require ("./voiceonline.json");
 client .on ("message", async (Message) => {
     if (!Message ["guild"] ||
@@ -1283,9 +1364,7 @@ let embed = new Discord.RichEmbed()
 });
 
 var top = require("./top.json");
-function save() {
-    fs.writeFileSync("./top.json", JSON.stringify(top, null, 4));
-}
+
 client.on("voiceStateUpdate", async function(oldMember, newMember) {
     if (newMember.user.bot) return;
     if (!top[newMember.guild.id]) top[newMember.guild.id] = {};
@@ -1386,6 +1465,9 @@ client.on("message", async function (message) {
             });
         break;
     }
+  function save() {
+    fs.writeFileSync("./top.json", JSON.stringify(top, null, 4));
+}
 });
 
 client.on("message",msg => {
@@ -1840,7 +1922,9 @@ if (message.author.bot) return;
           });
             });
           }
-         
+         fs.writeFile("./log.json", JSON.stringify(log), (err) => {
+if (err) console.error(err)
+})
         })
  
  
