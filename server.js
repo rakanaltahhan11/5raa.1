@@ -2432,19 +2432,19 @@ client.on("message", message => {
             if (!num) return message.channel.send("**⇏ | Type Number**");
             if (isNaN(num)) return message.channel.send("**⇏ | Number Only**");
             config[message.guild.id].banLimit = num;
-            message.channel.send(`**⇏ | Done It's Now : ${config[message.guild.id].banLimit} **`)
+            message.channel.send(`**⇏ | Done, It's Now : ${config[message.guild.id].banLimit} **`)
         }
         if (message.content.startsWith(prefix + "settings limitskick")) {
             if (!num) return message.channel.send("**⇏ | Type Number**");
             if (isNaN(num)) return message.channel.send("**⇏ | Numbers Only **");
             config[message.guild.id].kickLimits = num;
-            message.channel.send(`**⇏ | Done It's Now : ${config[message.guild.id].kickLimits}**`)
+            message.channel.send(`**⇏ | Done, It's Now : ${config[message.guild.id].kickLimits}**`)
         }
         if (message.content.startsWith(prefix + "settings limitsroleD")) {
             if (!num) return message.channel.send("**⇏ | Type Number**");
             if (isNaN(num)) return message.channel.send("**Numbers Only**");
             config[message.guild.id].roleDelLimit = num;
-            message.channel.send(`**⇏ | Done It's Now : ${config[message.guild.id].roleDelLimit}**`)
+            message.channel.send(`**⇏ | Done, It's Now : ${config[message.guild.id].roleDelLimit}**`)
         }
         if (message.content.startsWith(prefix + "settings limitsroleC")) {
             if (!num) return message.channel.send("**⇏ | Type Number**");
