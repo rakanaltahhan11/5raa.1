@@ -3,7 +3,7 @@ const prefix = ".";
 const client = new Discord.Client();
 const emojis = '677267870471684096';
 const fs = require("fs");
-const http = require('http');
+const https = require('http');
 const express = require('express');
 const moment = require('moment'); 
 const embedColor = "#36393e";
@@ -37,10 +37,10 @@ app.get("/", (request, response) => {
 
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`https://nikonbott.glitch.me/`);
+  https.get(`https://nikonbott.glitch.me/`);
 }, 280000);
 
-
+var pretty = require('pretty-ms')
 client.on("message", async message => {
   if (message.author.bot || message.channel.type === "dm") return;
   if (!message.content.startsWith(prefix)) return;
@@ -1228,7 +1228,14 @@ AFK Room : (${message.guild.afkChannel || "I Can't Find It"})\`\`\`** `)
 
 client.on("message", message => {
 	var args = message.content.split(' ').slice(1); 
-
+	let emoji = {
+        rg: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+        dnd: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'DND')}`,
+        idle: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Idle')}`,
+        offline: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Offline')}`,
+        discord: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Discord')}`,
+        bot: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'Bot')}`
+  }
 	var msg = message.content.toLowerCase();
 	if( !message.guild ) return;
   let roleremove = new Discord.RichEmbed()
@@ -1274,7 +1281,7 @@ let embed = new Discord.RichEmbed()
       const e = new Discord.RichEmbed()
     
       
-             .setDescription(':white_check_mark:** Change Role For **'+args[0]+'**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
+             .setDescription(`${emoji.eg} | Done, Change Role For `+args[0]+'**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
              .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
              .setColor('BLACK')
               message.channel.send(e)
@@ -1284,7 +1291,7 @@ let embed = new Discord.RichEmbed()
 
       const e1 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`All\`\`**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
+           .setDescription(`${emoji.eg} | Done, Change Role For \`\`All\`\`**,** `+'**'+'- '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.forEach(m=>m.removeRole( role1 ))
@@ -1294,7 +1301,7 @@ let embed = new Discord.RichEmbed()
 
       const e2 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`Bots\`\`**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
+           .setDescription(`${emoji.eg} | Done, Change Role For **\`\`Bots\`\`**,** `+'**'+'- '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.filter(m=>m.user.bot).forEach(m=>m.removeRole(role1))
@@ -1303,7 +1310,7 @@ let embed = new Discord.RichEmbed()
 
       const e3 = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **\`\`Humans\`\`**,** '+'**'+'- '+'`'+role1.name+'`'+'**')
+           .setDescription(`${emoji.rg} | Done, Change Role For **\`\`Humans\`\`**,** `+'**'+'- '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
 			message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.removeRole(role1))
@@ -1320,7 +1327,7 @@ let embed = new Discord.RichEmbed()
 			//return message.reply(`**:white_check_mark: \`\`[ ${role1.name} ]\`\` رتبة \`\`[ ${args[0]} ]\`\` لقد تم اعطاء **`);
      const e = new Discord.RichEmbed()
     
-           .setDescription(':white_check_mark:** Change Roles For **'+args[0]+'**,** '+'**'+'+ '+'`'+role1.name+'`'+'**')
+           .setDescription(`${emoji.rg} | Done, Change Role For **`+args[0]+'**,** '+'**'+'+ '+'`'+role1.name+'`'+'**')
            .setFooter('Requested By : '+message.author.username,message.author.avatarURL)
            .setColor('BLACK')
             message.channel.send(e)
