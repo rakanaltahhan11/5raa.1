@@ -1889,6 +1889,25 @@ client.on('message', message => {
     }
 });
 
+client.on("message", message => {
+        let emoji = {
+    right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+    wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+          warn: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'aaaa')}`,
+    load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+  
+}
+ if (message.content.statsWith(`.config`)) {
+   message.channel.send(`${emoji.warn} | __${message.guild.name}__'s settings :
+Limit Bans : \`\`as\`\`
+Limit Kick :\`\`ds\`\`
+Limit Role Create :\`\`ds\`\`
+Limit Role Delete :\`\`ds\`\`
+Limit Channel Delete :\`\`ds\`\`
+`)
+ }
+})
+
 const anti = JSON.parse(fs.readFileSync("./antigreff.json", "UTF8"));
 const config = JSON.parse(fs.readFileSync("./config.json", "UTF8"));
 client.on("message", message => {
@@ -2127,12 +2146,20 @@ client.on("roleCreate", async channel => {
 });
  
 client.on("guildBanAdd", async (guild, user) => {
+       let emoji = {
+    right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+    wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+    no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+       warn: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'warn')}`,
+    load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+  
+}
     const entry1 = await guild.guild.fetchAuditLogs({
         type: 'MEMBER_BAN_ADD'
     }).then(audit => audit.entries.first())
     console.log(entry1.executor.username)
     const entry = entry1.executor
-    if (!config[guild.id]) config[guild.id] = {
+    if (!config[guild.guild.id]) config[guild.guild.id] = {
         banLimit: 3,
         chaDelLimit: 3,
         roleDelLimit: 3,
@@ -2153,7 +2180,7 @@ client.on("guildBanAdd", async (guild, user) => {
             anti[guild.id + entry.id].actions = "0"
         }, config[guild.id].time * 1000)
         if (anti[guild.id + entry.id].actions >= config[guild.id].banLimit) {
-            user.members.get(entry.id).ban().catch(e => user.owner.send(`**⇏ | ${entry.username} He Tried To Ban Many People**`))
+            user.members.get(entry.id).ban().catch(e => user.owner.send(`${emoji.warn} | ${entry.username} He Tried To Ban Many People`))
             anti[guild.id + entry.id].actions = "0"
             fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
                 if (e) throw e;
@@ -2173,6 +2200,14 @@ client.on("guildBanAdd", async (guild, user) => {
 });
  
 client.on("guildKickAdd", async (guild, user) => {
+       let emoji = {
+    right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+    wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+    no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+       warn: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'warn')}`,
+    load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+  
+}
     const entry1 = await guild.fetchAuditLogs({
         type: 'MEMBER_KICK'
     }).then(audit => audit.entries.first())
@@ -2199,7 +2234,7 @@ client.on("guildKickAdd", async (guild, user) => {
             anti[guild.id + entry.id].actions = "0"
         }, config[guild.id].time * 1000)
         if (anti[guild.id + entry.id].actions >= config[guild.id].banLimit) {
-            user.members.get(entry.id).ban().catch(e => user.owner.send(`**⇏ | ${entry.username} He Tried To Kick Many People**`))
+            user.members.get(entry.id).ban().catch(e => user.owner.send(`${emoji.warn} | ${entry.username} He Tried To Kick Many People`))
             anti[guild.id + entry.id].actions = "0"
             fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
                 if (e) throw e;
@@ -2219,6 +2254,14 @@ client.on("guildKickAdd", async (guild, user) => {
 });
  
 client.on("guildMemberRemove", async member => {
+       let emoji = {
+    right: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'rightt')}`,
+    wrong: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'falsee')}`,
+    no: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'no')}`,
+       warn: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'warn')}`,
+    load: `${client.guilds.find(r => r.id === '677267870471684096').emojis.find(e => e.name === 'load')}`
+  
+}
     const entry1 = await member.guild.fetchAuditLogs().then(audit => audit.entries.first())
     if (entry1.action === "MEMBER_KICK") {
         const entry2 = await member.guild.fetchAuditLogs({
@@ -2246,7 +2289,7 @@ client.on("guildMemberRemove", async member => {
                 anti[member.guild.id + entry.id].actions = "0"
             }, config[member.guild.id].time * 1000)
             if (anti[member.guild.id + entry.id].actions >= config[member.guild.id].kickLimits) {
-                member.members.get(entry.id).ban().catch(e => member.owner.send(`**⇏ | ${entry.username} He Tried To Ban Many People**`))
+                member.members.get(entry.id).ban().catch(e => member.owner.send(`${emoji.warn} | ${entry.username} He Tried To Ban Many People`))
                 anti[member.guild.id + entry.id].actions = "0"
                 fs.writeFile("./config.json", JSON.stringify(config, null, 2), function (e) {
                     if (e) throw e;
